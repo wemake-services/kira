@@ -1,0 +1,22 @@
+image: elixir:1.8.1-slim
+
+services:
+  - postgres:latest
+
+variables:
+  POSTGRES_DB: test_test
+  POSTGRES_HOST: postgres
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: "postgres"
+  MIX_ENV: "test"
+
+before_script:
+  - apt-get update && apt-get -y install postgresql-client
+  - mix deps.get
+  - mix ecto.create
+  - mix ecto.migrate
+
+mix:
+  script:
+    - mix credo --strict
+    - mix test
