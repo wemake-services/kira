@@ -14,6 +14,7 @@ defmodule KiraWeb.ConnCase do
   """
 
   use ExUnit.CaseTemplate
+  alias Ecto.Adapters.SQL.Sandbox
 
   using do
     quote do
@@ -27,10 +28,10 @@ defmodule KiraWeb.ConnCase do
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Kira.Repo)
+    :ok = Sandbox.checkout(Kira.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(Kira.Repo, {:shared, self()})
+      Sandbox.mode(Kira.Repo, {:shared, self()})
     end
 
     {:ok, conn: Phoenix.ConnTest.build_conn()}

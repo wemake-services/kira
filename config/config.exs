@@ -13,7 +13,8 @@ config :kira,
 # Configures the endpoint
 config :kira, KiraWeb.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "pp9AKGNUuSK/GvKgmSrIb+YRz/3O/w598i9QjE4axB4ZVK7vrjab4nURwZ8KRZbz",
+  secret_key_base:
+    "pp9AKGNUuSK/GvKgmSrIb+YRz/3O/w598i9QjE4axB4ZVK7vrjab4nURwZ8KRZbz",
   render_errors: [view: KiraWeb.ErrorView, accepts: ~w(html json)],
   pubsub: [name: Kira.PubSub, adapter: Phoenix.PubSub.PG2]
 

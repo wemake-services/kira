@@ -14,6 +14,7 @@ defmodule KiraWeb.ChannelCase do
   """
 
   use ExUnit.CaseTemplate
+  alias Ecto.Adapters.SQL.Sandbox
 
   using do
     quote do
@@ -26,10 +27,10 @@ defmodule KiraWeb.ChannelCase do
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Kira.Repo)
+    :ok = Sandbox.checkout(Kira.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(Kira.Repo, {:shared, self()})
+      Sandbox.mode(Kira.Repo, {:shared, self()})
     end
 
     :ok
