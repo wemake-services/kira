@@ -10,7 +10,14 @@ defmodule Kira.MixProject do
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      test_coverage: [tool: ExCoveralls],
+      preferred_cli_env: [
+        coveralls: :test,
+        "coveralls.detail": :test,
+        "coveralls.post": :test,
+        "coveralls.html": :test
+      ]
     ]
   end
 
@@ -33,6 +40,7 @@ defmodule Kira.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      # Default phoenix:
       {:phoenix, "~> 1.4.1"},
       {:phoenix_pubsub, "~> 1.1"},
       {:phoenix_ecto, "~> 4.0"},
@@ -43,8 +51,14 @@ defmodule Kira.MixProject do
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
 
-      # Dev only
+      # Custom dependencies:
+      {:exop, "~> 1.2.3"},
+      {:plug_require_header, "~> 0.8"},
+      {:httpoison, "~> 1.4"},
+
+      # Dev only:
       {:phoenix_live_reload, "~> 1.2", only: :dev},
+      {:excoveralls, "~> 0.10", only: :test},
       {:credo, "~> 1.0.0", only: [:dev, :test], runtime: false}
     ]
   end
@@ -59,7 +73,7 @@ defmodule Kira.MixProject do
     [
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
-      test: ["ecto.create --quiet", "ecto.migrate", "test"]
+      test: ["ecto.create --quiet", "ecto.migrate", "coveralls"]
     ]
   end
 end
