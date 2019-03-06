@@ -1,36 +1,75 @@
-defmodule KiraWeb.Webhooks.IssueControllerTest do
+defmodule KiraWebTest.Webhooks.IssueControllerTest do
   use KiraWeb.ConnCase
 
-  alias Kira.Projects
-  alias Kira.Projects.Issue
+  import Tesla.Mock
+  import KiraTest.Factory
+  alias Kira.Projects.Queries.IssueQueries
 
-  @create_attrs %{
-    uid: 42
-  }
-  @update_attrs %{
-    uid: 43
-  }
-  @invalid_attrs %{uid: nil}
+  @invalid_attrs %{"uid" => nil}
 
-  def fixture(:issue) do
-    {:ok, issue} = Projects.create_issue(@create_attrs)
-    issue
+  setup do
+    # Just disable all HTTP calls:
+    mock_global(fn _ -> %Tesla.Env{status: 200} end)
+
+    {:ok, project: insert(:project)}
   end
 
-  setup %{conn: conn} do
-    {:ok, conn: put_req_header(conn, "accept", "application/json")}
-  end
+  describe "webhook issue controller" do
+    test "invalid data is handled", %{conn: conn} do
+      conn = post(
+        conn,
+        Routes.issue_path(conn, :create),
+        @invalid_attrs
+      )
 
-  describe "create issue" do
-    # TODO: test correct creation and use real webhook data format
-    test "renders errors when data is invalid", %{conn: conn} do
-      conn = post(conn, Routes.issue_path(conn, :create), issue: @invalid_attrs)
-      assert json_response(conn, 422)["errors"] != %{}
+      assert response(conn, 400)
+    end
+
+    test "valid issue data is handled", %{project: project, conn: conn} do
+      issue_params = string_params_for(:issue)
+      issue =
+        issue_params
+        |> Map.put("id", issue_params["uid"])
+        |> Map.put("action", "open")
+
+      conn = post(
+        conn,
+        Routes.issue_path(conn, :create),
+        %{
+          "object_kind" => "issue",
+          "project" => %{"id" => project.uid},
+          "object_attributes" => issue
+        }
+      )
+
+      assert response(conn, 200)
+      assert IssueQueries.get_issue!(issue["uid"])
     end
   end
 
-  defp create_issue(_) do
-    issue = fixture(:issue)
-    {:ok, issue: issue}
+  describe "webhook issue note controller" do
+    setup %{project: project} do
+      {:ok, issue: insert(:issue, project: project)}
+    end
+
+    test "valid issue note data is handled", %{issue: issue, conn: conn} do
+      conn = post(
+        conn,
+        Routes.issue_path(conn, :create),
+        %{
+          "object_kind" => "note",
+          "project_id" => issue.project.uid,
+          "object_attributes" => %{
+            "noteable_type" => "Issue",
+            "id" => 123,
+            "note" => "@kira-bot queue",
+            "noteable_id" => issue.uid
+          }
+        }
+      )
+
+      assert response(conn, 200)
+      assert IssueQueries.get_issue!(issue.uid).state == "queued"
+    end
   end
 end

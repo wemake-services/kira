@@ -50,15 +50,19 @@ defmodule Kira.MixProject do
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
+      {:cowboy, "~> 2.5", override: true},
 
       # Custom dependencies:
       {:exop, "~> 1.2.3"},
-      {:plug_require_header, "~> 0.8"},
-      {:httpoison, "~> 1.4"},
+      {:tesla, "~> 1.2.0"},
+      {:hackney, "~> 1.14.0"},
 
       # Dev only:
       {:phoenix_live_reload, "~> 1.2", only: :dev},
+      {:ex_machina, "~> 2.3"},
       {:excoveralls, "~> 0.10", only: :test},
+      {:faker, "~> 0.12", only: :test},
+      {:mox, "~> 0.5", only: :test},
       {:credo, "~> 1.0.0", only: [:dev, :test], runtime: false}
     ]
   end
@@ -72,8 +76,7 @@ defmodule Kira.MixProject do
   defp aliases do
     [
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
-      "ecto.reset": ["ecto.drop", "ecto.setup"],
-      test: ["ecto.create --quiet", "ecto.migrate", "coveralls"]
+      "ecto.reset": ["ecto.drop", "ecto.setup"]
     ]
   end
 end

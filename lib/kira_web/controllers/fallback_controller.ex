@@ -6,17 +6,20 @@ defmodule KiraWeb.FallbackController do
   """
   use KiraWeb, :controller
 
-  def call(conn, {:error, %Ecto.Changeset{} = changeset}) do
-    conn
-    |> put_status(:unprocessable_entity)
-    |> put_view(KiraWeb.ChangesetView)
-    |> render("error.json", changeset: changeset)
+  @doc """
+  We send this response for all cleint related errors.
+  """
+  def call(conn, :error) do
+    send_resp(conn, 400, "")
   end
 
-  def call(conn, {:error, :not_found}) do
-    conn
-    |> put_status(:not_found)
-    |> put_view(KiraWeb.ErrorView)
-    |> render(:"404")
+  @doc """
+  A special fallback for idempotent actions.
+
+  We raise a special kind of warnings inside our app
+  which should be treated as: it is already in the correct state, no worries.
+  """
+  def call(conn, {:interrupt, :idempotence}) do
+    send_resp(conn, 200, "idempotence")
   end
 end

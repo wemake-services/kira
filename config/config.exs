@@ -12,7 +12,8 @@ config :kira,
 
 # Configures the endpoint
 config :kira, KiraWeb.Endpoint,
-  url: [host: "localhost"],  # TODO: hide secret
+  # TODO: hide secret
+  url: [host: "localhost"],
   secret_key_base:
     "pp9AKGNUuSK/GvKgmSrIb+YRz/3O/w598i9QjE4axB4ZVK7vrjab4nURwZ8KRZbz",
   render_errors: [view: KiraWeb.ErrorView, accepts: ~w(html json)],
@@ -26,9 +27,13 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
+# Configuring HTTP client:
+config :tesla, adapter: Tesla.Adapter.Hackney
+
 # Custom configuration for this app:
 config :kira, :gitlab,
   personal_token: System.get_env("KIRA_GITLAB_PERSONAL_TOKEN"),
+  secret_header_value: System.get_env("KIRA_GITLAB_SECRET_HEADER_VALUE"),
   domain: "https://gitlab.com"
 
 # Import environment specific config. This must remain at the bottom

@@ -1,6 +1,6 @@
 defmodule Kira.Projects.Queries.ProjectQueries do
   @moduledoc """
-  The Projects queries.
+  Reading queries that do not modify state of `Project`s.
   """
 
   import Ecto.Query, warn: false

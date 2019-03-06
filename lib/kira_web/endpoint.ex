@@ -1,4 +1,6 @@
 defmodule KiraWeb.Endpoint do
+  # credo:disable-for-this-file: Credo.Check.Refactor.ModuleDependencies
+
   use Phoenix.Endpoint, otp_app: :kira
 
   # Serve at "/" the static files from "priv/static" directory.

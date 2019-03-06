@@ -1,0 +1,12 @@
+{
+  "skip_files": [
+    "lib/kira.ex",
+    "lib/kira_web.ex",
+
+    "test/"
+  ],
+  "coverage_options": {
+    "output_dir": "cover/",
+    "minimum_coverage": 80
+  }
+}
