@@ -21,6 +21,7 @@ before_script:
 test:
   stage: test
   script:
+    - mix format --check-formatted
     - mix credo
     - mix coveralls
   coverage: '/\[TOTAL\]\s+(\d+\.\d+)%/'
