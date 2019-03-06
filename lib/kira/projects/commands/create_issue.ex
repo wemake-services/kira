@@ -1,9 +1,13 @@
 defmodule Kira.Projects.Commands.CreateIssue do
+  @moduledoc """
+  Persistant command to create a new `Issue`.
+  """
+
   use Exop.Operation
 
-  alias Kira.Repo
-  alias Kira.Projects.Entities.{Project, Issue}
+  alias Kira.Projects.Entities.Issue
   alias Kira.Projects.Queries.ProjectQueries
+  alias Kira.Repo
 
   parameter(:project_uid, type: :integer)
   parameter(:attrs, type: :map)

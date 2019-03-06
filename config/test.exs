@@ -9,6 +9,9 @@ config :kira, KiraWeb.Endpoint,
 # Print only warnings and errors during test
 config :logger, level: :warn
 
+# Disabling any HTTP calls with Tesla
+config :tesla, adapter: Tesla.Mock
+
 # Configure your database
 config :kira, Kira.Repo,
   username: System.get_env("POSTGRES_USER") || "postgres",
