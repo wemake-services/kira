@@ -9,6 +9,9 @@ defmodule Kira.Projects.Entities.Issue do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @fields ~w(uid iid state weight due_date project_id assignee_id)a
+
+  @derive {Jason.Encoder, only: @fields}
   schema "issues" do
     field :uid, :integer
     field :iid, :integer
@@ -18,9 +21,9 @@ defmodule Kira.Projects.Entities.Issue do
 
     field :weight, :integer, default: 0
     field :due_date, :date, default: nil
-    # TODO: assignee and participant model
 
     belongs_to :project, Kira.Projects.Entities.Project
+    belongs_to :assignee, Kira.Accounts.Entities.User
 
     timestamps()
   end
@@ -28,9 +31,10 @@ defmodule Kira.Projects.Entities.Issue do
   @doc false
   def changeset(issue, attrs) do
     issue
-    |> cast(attrs, [:uid, :iid, :state, :weight, :due_date, :project_id])
+    |> cast(attrs, @fields)
     |> validate_required([:uid, :iid, :state, :project_id])
     |> unique_constraint(:uid)
     |> unique_constraint(:project_issue, name: :project_issue)
+    |> unique_constraint(:assignee_id)
   end
 end

@@ -1,5 +1,5 @@
 defmodule KiraWeb.Endpoint do
-  # credo:disable-for-this-file: Credo.Check.Refactor.ModuleDependencies
+  # credo:disable-for-this-file Credo.Check.Refactor.ModuleDependencies
 
   use Phoenix.Endpoint, otp_app: :kira
 

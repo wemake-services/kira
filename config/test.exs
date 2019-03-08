@@ -12,6 +12,9 @@ config :logger, level: :warn
 # Disabling any HTTP calls with Tesla
 config :tesla, adapter: Tesla.Mock
 
+# Deactivating cron jobs
+config :kira, Kira.Scheduler, jobs: []
+
 # Configure your database
 config :kira, Kira.Repo,
   username: System.get_env("POSTGRES_USER") || "postgres",

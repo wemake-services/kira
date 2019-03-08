@@ -7,6 +7,6 @@
   ],
   "coverage_options": {
     "output_dir": "cover/",
-    "minimum_coverage": 80
+    "minimum_coverage": 87
   }
 }

@@ -14,3 +14,8 @@ Mox.defmock(
   KiraTest.Projects.Services.Reactions.Providers.GitlabReaction.Mock,
   for: Tesla.Adapter
 )
+
+Mox.defmock(
+  KiraTest.Accounts.Services.Providers.GitlabUsers.Mock,
+  for: Tesla.Adapter
+)

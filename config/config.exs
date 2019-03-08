@@ -30,6 +30,20 @@ config :phoenix, :json_library, Jason
 # Configuring HTTP client:
 config :tesla, adapter: Tesla.Adapter.Hackney
 
+# Configuring cron jobs
+config :kira, Kira.Scheduler,
+  timezone: :utc,
+  overlap: false,
+  # debug_logging: false,
+  # TODO: turn on global mode when using cluster with multiple nodes
+  # global: true,
+  jobs: [
+    {"@minutely", {Kira.Usecases.AssignDeveloperToTask, :run, [[]]}},
+
+    # Every five minutes:
+    {"*/15 * * * *", {Kira.Usecases.RenewProjectUsers, :run, [[]]}}
+  ]
+
 # Custom configuration for this app:
 config :kira, :gitlab,
   personal_token: System.get_env("KIRA_GITLAB_PERSONAL_TOKEN"),

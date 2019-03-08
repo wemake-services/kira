@@ -9,7 +9,9 @@ defmodule KiraWeb.Plugs.GitlabSecretHeader do
   use Plug.Builder
 
   @secret_header "X-Gitlab-Token"
-  @secret_header_value Application.get_env(:kira, :gitlab)[:secret_header_value]
+  @secret_header_value Application.get_env(:kira, :gitlab)[
+                         :secret_header_value
+                       ]
 
   plug :validate_secret_header_value
 

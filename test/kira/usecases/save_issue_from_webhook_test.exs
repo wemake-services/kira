@@ -4,6 +4,7 @@ defmodule KiraTest.Usecases.SaveIssueFromWebhookTest do
   import Mox
   import KiraTest.Factory
 
+  alias Kira.Projects.Services.Reactions.Providers.GitlabReaction
   alias Kira.Usecases.SaveIssueFromWebhook
   alias KiraTest.Projects.Services.Reactions.Providers.GitlabReaction.Mock
 
@@ -20,8 +21,10 @@ defmodule KiraTest.Usecases.SaveIssueFromWebhookTest do
       issue = string_params_for(:issue)
       issue_iid = issue["iid"]
 
-      base_url = "https://gitlab.com/api/v4/projects"
-      issue_url = "#{base_url}/#{project.uid}/issues/#{issue_iid}/award_emoji"
+      base_url = GitlabReaction.api_url()
+
+      issue_url =
+        "#{base_url}/projects/#{project.uid}/issues/#{issue_iid}/award_emoji"
 
       Mock
       |> expect(:call, fn

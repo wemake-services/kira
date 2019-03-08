@@ -57,6 +57,11 @@ config :phoenix, :stacktrace_depth, 20
 # Initialize plugs at runtime for faster development compilation
 config :phoenix, :plug_init_mode, :runtime
 
+# Deactivating cron jobs and logs
+config :kira, Kira.Scheduler,
+  debug_logging: false,
+  jobs: []
+
 # Configure your database
 config :kira, Kira.Repo,
   username: "postgres",

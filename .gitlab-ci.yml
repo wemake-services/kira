@@ -14,14 +14,15 @@ before_script:
   # Installing required libs:
   - apt-get update && apt-get -y install postgresql-client
   # Installing elixir deps:
-  - mix local.hex --force && mix local.rebar --force && mix deps.get
-  # Setting up env before tests:
-  - mix ecto.setup
+  - mix local.hex --force && mix local.rebar --force
+  - mix do deps.get, deps.compile
+  # Setting up database:
+  - mix ecto.reset
 
 test:
   stage: test
   script:
     - mix format --check-formatted
     - mix credo
-    - mix coveralls
+    - mix test --cover --timeout 1000
   coverage: '/\[TOTAL\]\s+(\d+\.\d+)%/'

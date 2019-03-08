@@ -13,6 +13,7 @@ defmodule Kira.MixProject do
       deps: deps(),
       test_coverage: [tool: ExCoveralls],
       preferred_cli_env: [
+        ci: :test,
         coveralls: :test,
         "coveralls.detail": :test,
         "coveralls.post": :test,
@@ -56,6 +57,8 @@ defmodule Kira.MixProject do
       {:exop, "~> 1.2.3"},
       {:tesla, "~> 1.2.0"},
       {:hackney, "~> 1.14.0"},
+      {:quantum, "~> 2.3"},
+      {:timex, "~> 3.0"},
 
       # Dev only:
       {:phoenix_live_reload, "~> 1.2", only: :dev},

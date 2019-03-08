@@ -18,12 +18,13 @@ defmodule KiraTest.Usecases.QueueIssueFromNoteTest do
     end
 
     test "valid queue command", %{issue: issue, note_iid: note_iid} do
-      issue_note_url = GitlabReaction.issue_note_reaction_url(issue, note_iid)
+      issue_note_url =
+        GitlabReaction.api_url() <>
+          GitlabReaction.issue_note_reaction_url(issue, note_iid)
 
       Mock
       |> expect(:call, fn
-        %{method: :post, url: "https://gitlab.com/api/v4" <> ^issue_note_url},
-        _opts ->
+        %{method: :post, url: ^issue_note_url}, _opts ->
           {:ok, %Tesla.Env{status: 200}}
       end)
 

@@ -142,14 +142,14 @@
         #
         # Controversial and experimental checks (opt-in, just replace `false` with `[]`)
         #
+        # TODO: UnnecessaryAliasExpansion
         {Credo.Check.Consistency.MultiAliasImportRequireUse, false},
         {Credo.Check.Design.DuplicatedCode, []},
         {Credo.Check.Readability.Specs, false},
         {Credo.Check.Refactor.ABCSize, []},
         {Credo.Check.Refactor.AppendSingleItem, []},
         {Credo.Check.Refactor.DoubleBooleanNegation, []},
-        # TODO: enable
-        {Credo.Check.Refactor.ModuleDependencies, false},
+        {Credo.Check.Refactor.ModuleDependencies, []},
         {Credo.Check.Refactor.VariableRebinding, []},
         {Credo.Check.Warning.MapGetUnsafePass, []},
         {Credo.Check.Warning.UnsafeToAtom, []}

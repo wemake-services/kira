@@ -10,17 +10,12 @@ defmodule Kira.Projects.Services.Reactions.Providers.GitlabReaction do
   This is something this module should not care about.
   """
 
-  use Tesla
+  use Kira.Common.Gitlab.Client
 
   @reaction "ok_hand"
-  @domain Application.get_env(:kira, :gitlab)[:domain]
-  @api_url "#{@domain}/api/v4"
-  @private_token Application.get_env(:kira, :gitlab)[:personal_token]
 
-  plug Tesla.Middleware.BaseUrl, @api_url
-  plug Tesla.Middleware.Headers, [{"Private-Token", @private_token}]
   plug Tesla.Middleware.Query, name: @reaction
-  plug Tesla.Middleware.Timeout, timeout: 2000
+  plug Tesla.Middleware.Timeout, timeout: 3000
   plug Tesla.Middleware.Retry
 
   # URL API:

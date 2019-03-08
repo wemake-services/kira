@@ -11,9 +11,10 @@ defmodule Kira.Application do
       # Start the Ecto repository
       Kira.Repo,
       # Start the endpoint when the application starts
-      KiraWeb.Endpoint
-      # Starts a worker by calling: Kira.Worker.start_link(arg)
-      # {Kira.Worker, arg},
+      KiraWeb.Endpoint,
+
+      # Cron jobs scheduler:
+      Kira.Scheduler
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

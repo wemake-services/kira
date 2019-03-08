@@ -1,5 +1,5 @@
 defmodule KiraWeb do
-  # credo:disable-for-this-file: Credo.Check.Refactor.ModuleDependencies
+  # credo:disable-for-this-file Credo.Check.Refactor.ModuleDependencies
 
   @moduledoc """
   The entrypoint for defining your web interface, such
