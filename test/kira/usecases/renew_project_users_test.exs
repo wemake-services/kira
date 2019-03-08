@@ -76,6 +76,7 @@ defmodule KiraTest.Usecases.RenewProjectUsersTest do
         GitlabUsers.api_url() <> GitlabUsers.in_project_url(project)
 
       new_user = string_params_for(:user) |> rename_id()
+
       existing_user =
         project.participants
         |> Enum.at(0)
@@ -104,6 +105,7 @@ defmodule KiraTest.Usecases.RenewProjectUsersTest do
         GitlabUsers.api_url() <> GitlabUsers.in_project_url(project)
 
       new_user = string_params_for(:user) |> rename_id()
+
       users =
         project.participants
         |> Jason.encode!()
