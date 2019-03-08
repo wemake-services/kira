@@ -115,7 +115,8 @@ defmodule KiraTest.Usecases.RenewProjectUsersTest do
       Mock
       |> expect(:call, fn
         %{method: :get, url: ^project_url}, _opts ->
-          {:ok, json([users | new_user])}
+          # credo:disable-for-next-line Credo.Check.Refactor.AppendSingleItem
+          {:ok, json(users ++ [new_user])}
       end)
 
       {:ok, context} = RenewProjectUsers.run([])
