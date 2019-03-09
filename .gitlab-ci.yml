@@ -26,7 +26,7 @@ test:
 
 review:
   stage: test
-  image: ruby:2.1
+  image: ruby:2.3
   before_script:
     - gem install danger-gitlab
   script:
