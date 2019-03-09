@@ -13,7 +13,6 @@ variables:
 before_script:
   # Installing required libs:
   - apt-get update && apt-get -y install postgresql-client
-  - gem install danger-gitlab
   # Installing elixir deps:
   - mix local.hex --force && mix local.rebar --force
   - mix do deps.get, deps.compile
@@ -29,8 +28,10 @@ test:
   coverage: '/\[TOTAL\]\s+(\d+\.\d+)%/'
 
 review:
+  image: ruby:2.1
   stage: test
   script:
+    - gem install danger-gitlab
     - danger
   except:
     - master
