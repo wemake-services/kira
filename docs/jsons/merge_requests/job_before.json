@@ -1,0 +1,44 @@
+{
+  "object_kind": "build",
+  "ref": "feature-webhook",
+  "tag": false,
+  "before_sha": "0000000000000000000000000000000000000000",
+  "sha": "e137038adb75218710669bc0e6ddf2e38798bfe4",
+  "build_id": 174558025,
+  "build_name": "test",
+  "build_stage": "test",
+  "build_status": "running",
+  "build_started_at": "2019-03-09 09:11:49 UTC",
+  "build_finished_at": null,
+  "build_duration": 0.071684722,
+  "build_allow_failure": false,
+  "build_failure_reason": "unknown_failure",
+  "project_id": 10822323,
+  "project_name": "wemake.services / kira",
+  "user": {
+    "id": 267715,
+    "name": "Nikita Sobolev",
+    "email": "mail@sobolevn.me"
+  },
+  "commit": {
+    "id": 51025365,
+    "sha": "e137038adb75218710669bc0e6ddf2e38798bfe4",
+    "message": "Update README.md",
+    "author_name": "Nikita Sobolev",
+    "author_email": "mail@sobolevn.me",
+    "author_url": "https://gitlab.com/sobolevn",
+    "status": "pending",
+    "duration": null,
+    "started_at": null,
+    "finished_at": null
+  },
+  "repository": {
+    "name": "kira",
+    "url": "git@gitlab.com:wemake.services/kira.git",
+    "description": "",
+    "homepage": "https://gitlab.com/wemake.services/kira",
+    "git_http_url": "https://gitlab.com/wemake.services/kira.git",
+    "git_ssh_url": "git@gitlab.com:wemake.services/kira.git",
+    "visibility_level": 0
+  }
+}

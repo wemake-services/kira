@@ -38,10 +38,10 @@ config :kira, Kira.Scheduler,
   # TODO: turn on global mode when using cluster with multiple nodes
   # global: true,
   jobs: [
-    {"@minutely", {Kira.Usecases.AssignDeveloperToTask, :run, [[]]}},
+    {"@minutely", {Kira.Usecases.AssignUserToTask, :run, [[]]}},
 
-    # Every five minutes:
-    {"*/15 * * * *", {Kira.Usecases.RenewProjectUsers, :run, [[]]}}
+    # Every thirty minutes:
+    {"*/30 * * * *", {Kira.Usecases.RenewProjectUsers, :run, [[]]}}
   ]
 
 # Custom configuration for this app:

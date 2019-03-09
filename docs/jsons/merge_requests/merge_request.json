@@ -1,0 +1,171 @@
+{
+  "object_kind": "merge_request",
+  "event_type": "merge_request",
+  "user": {
+    "name": "Nikita Sobolev",
+    "username": "sobolevn",
+    "avatar_url": "https://secure.gravatar.com/avatar/8c3a2ebf7c2b84f8390d99c7bf8c8a48?s=80\u0026d=identicon"
+  },
+  "project": {
+    "id": 10822323,
+    "name": "kira",
+    "description": "",
+    "web_url": "https://gitlab.com/wemake.services/kira",
+    "avatar_url": null,
+    "git_ssh_url": "git@gitlab.com:wemake.services/kira.git",
+    "git_http_url": "https://gitlab.com/wemake.services/kira.git",
+    "namespace": "wemake.services",
+    "visibility_level": 0,
+    "path_with_namespace": "wemake.services/kira",
+    "default_branch": "master",
+    "ci_config_path": null,
+    "homepage": "https://gitlab.com/wemake.services/kira",
+    "url": "git@gitlab.com:wemake.services/kira.git",
+    "ssh_url": "git@gitlab.com:wemake.services/kira.git",
+    "http_url": "https://gitlab.com/wemake.services/kira.git"
+  },
+  "object_attributes": {
+    "assignee_id": null,
+    "author_id": 267715,
+    "created_at": "2019-03-09 09:12:12 UTC",
+    "description": "Body",
+    "head_pipeline_id": 51025365,
+    "id": 25458207,
+    "iid": 2,
+    "last_edited_at": null,
+    "last_edited_by_id": null,
+    "merge_commit_sha": null,
+    "merge_error": null,
+    "merge_params": {
+      "force_remove_source_branch": "1"
+    },
+    "merge_status": "unchecked",
+    "merge_user_id": null,
+    "merge_when_pipeline_succeeds": false,
+    "milestone_id": null,
+    "source_branch": "feature-webhook",
+    "source_project_id": 10822323,
+    "state": "opened",
+    "target_branch": "master",
+    "target_project_id": 10822323,
+    "time_estimate": 0,
+    "title": "Update README.md",
+    "updated_at": "2019-03-09 09:12:12 UTC",
+    "updated_by_id": null,
+    "url": "https://gitlab.com/wemake.services/kira/merge_requests/2",
+    "source": {
+      "id": 10822323,
+      "name": "kira",
+      "description": "",
+      "web_url": "https://gitlab.com/wemake.services/kira",
+      "avatar_url": null,
+      "git_ssh_url": "git@gitlab.com:wemake.services/kira.git",
+      "git_http_url": "https://gitlab.com/wemake.services/kira.git",
+      "namespace": "wemake.services",
+      "visibility_level": 0,
+      "path_with_namespace": "wemake.services/kira",
+      "default_branch": "master",
+      "ci_config_path": null,
+      "homepage": "https://gitlab.com/wemake.services/kira",
+      "url": "git@gitlab.com:wemake.services/kira.git",
+      "ssh_url": "git@gitlab.com:wemake.services/kira.git",
+      "http_url": "https://gitlab.com/wemake.services/kira.git"
+    },
+    "target": {
+      "id": 10822323,
+      "name": "kira",
+      "description": "",
+      "web_url": "https://gitlab.com/wemake.services/kira",
+      "avatar_url": null,
+      "git_ssh_url": "git@gitlab.com:wemake.services/kira.git",
+      "git_http_url": "https://gitlab.com/wemake.services/kira.git",
+      "namespace": "wemake.services",
+      "visibility_level": 0,
+      "path_with_namespace": "wemake.services/kira",
+      "default_branch": "master",
+      "ci_config_path": null,
+      "homepage": "https://gitlab.com/wemake.services/kira",
+      "url": "git@gitlab.com:wemake.services/kira.git",
+      "ssh_url": "git@gitlab.com:wemake.services/kira.git",
+      "http_url": "https://gitlab.com/wemake.services/kira.git"
+    },
+    "last_commit": {
+      "id": "e137038adb75218710669bc0e6ddf2e38798bfe4",
+      "message": "Update README.md",
+      "timestamp": "2019-03-09T09:11:43Z",
+      "url": "https://gitlab.com/wemake.services/kira/commit/e137038adb75218710669bc0e6ddf2e38798bfe4",
+      "author": {
+        "name": "Nikita Sobolev",
+        "email": "mail@sobolevn.me"
+      }
+    },
+    "work_in_progress": false,
+    "total_time_spent": 0,
+    "human_total_time_spent": null,
+    "human_time_estimate": null,
+    "action": "open"
+  },
+  "labels": [],
+  "changes": {
+    "author_id": {
+      "previous": null,
+      "current": 267715
+    },
+    "created_at": {
+      "previous": null,
+      "current": "2019-03-09 09:12:12 UTC"
+    },
+    "description": {
+      "previous": null,
+      "current": "Body"
+    },
+    "id": {
+      "previous": null,
+      "current": 25458207
+    },
+    "iid": {
+      "previous": null,
+      "current": 2
+    },
+    "merge_params": {
+      "previous": {},
+      "current": {
+        "force_remove_source_branch": "1"
+      }
+    },
+    "source_branch": {
+      "previous": null,
+      "current": "feature-webhook"
+    },
+    "source_project_id": {
+      "previous": null,
+      "current": 10822323
+    },
+    "target_branch": {
+      "previous": null,
+      "current": "master"
+    },
+    "target_project_id": {
+      "previous": null,
+      "current": 10822323
+    },
+    "title": {
+      "previous": null,
+      "current": "Update README.md"
+    },
+    "updated_at": {
+      "previous": null,
+      "current": "2019-03-09 09:12:12 UTC"
+    },
+    "total_time_spent": {
+      "previous": null,
+      "current": 0
+    }
+  },
+  "repository": {
+    "name": "kira",
+    "url": "git@gitlab.com:wemake.services/kira.git",
+    "description": "",
+    "homepage": "https://gitlab.com/wemake.services/kira"
+  }
+}

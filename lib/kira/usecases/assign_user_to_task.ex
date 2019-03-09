@@ -1,6 +1,6 @@
-defmodule Kira.Usecases.AssignDeveloperToTask do
+defmodule Kira.Usecases.AssignUserToTask do
   @moduledoc """
-  We need to assign free developers to the most important tasks.
+  We need to assign free `User`s to the most important tasks.
 
   We mean `Issue` and `Code Review` by "tasks".
   Different tasks have different priorities.
@@ -10,7 +10,7 @@ defmodule Kira.Usecases.AssignDeveloperToTask do
 
   use Exop.Chain
 
-  operation(Kira.Accounts.Services.AssignUser)
+  operation(Kira.Accounts.Services.AssignUserToTask)
   # => operation(Kira.Projects.Services.FindTaskToAssign)
   # => operation(Kira.Accounts.Queries.FindFreeDeveloper)
   # => operation(Kira.Accounts.Commands.AssignDeveloper)

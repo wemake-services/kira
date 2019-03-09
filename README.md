@@ -13,6 +13,17 @@ Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
 Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
 
+## TODO before release
+
+- Create `CodeReview` entity
+- Create `CodeReview` webhook controller
+- Create `Pipeline` entity
+- Bind `CodeReview` and `Pipeline` to respect its status
+- Create `AssignUserToTask` cron job
+- Create `queue after` command
+- Create login mechanism for `User`s
+- Create "working/not-working" button
+
 ## Learn more
 
   * Official website: http://www.phoenixframework.org/
