@@ -1,6 +1,6 @@
 # WARN WHEN AN MR IS CLASSED AS WORK IN PROGRESS.
 warn "MR is classed as Work in Progress" if
-  gitlab.mr_title.include? "[WIP]"
+  gitlab.mr_title.include? "WIP:"
 
 # HIGHLIGHT WITH A CLICKABLE LINK IF IMPORTANT FILES ARE CHANGED.
 important_files = [
@@ -20,10 +20,11 @@ end
 
 # ENSURE THERE IS A SUMMARY FOR A MR.
 failure "Please provide a summary in the Merge Request description" if
-  gitlab.mr_body.length < 5
+  gitlab.mr_body.length < 50
 
-# TODO: make sure that `mr_body` contains:
-# 1. closes #issue-number
+# ENSURE THAT EACH MERGE REQUEST CLOSES AT LEAST ONE ISSUE.
+failure "MR does not close any issues. Should close at least one" if
+  gitlab.mr_title.index /closes #\d+/i
 
 # ONLY ACCEPT MRS TO THE DEVELOP BRANCH.
 failure "Please re-submit this MR to master branch" if
