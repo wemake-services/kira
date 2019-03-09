@@ -1,8 +1,3 @@
-image: elixir:1.8.1-slim
-
-services:
-  - postgres:latest
-
 variables:
   POSTGRES_DB: test_test
   POSTGRES_HOST: postgres
@@ -10,17 +5,19 @@ variables:
   POSTGRES_PASSWORD: "postgres"
   MIX_ENV: "test"
 
-before_script:
-  # Installing required libs:
-  - apt-get update && apt-get -y install postgresql-client
-  # Installing elixir deps:
-  - mix local.hex --force && mix local.rebar --force
-  - mix do deps.get, deps.compile
-  # Setting up database:
-  - mix ecto.reset
-
 test:
   stage: test
+  image: elixir:1.8.1-slim
+  services:
+    - postgres:latest
+  before_script:
+    # Installing required libs:
+    - apt-get update && apt-get -y install postgresql-client
+    # Installing elixir deps:
+    - mix local.hex --force && mix local.rebar --force
+    - mix do deps.get, deps.compile
+    # Setting up database:
+    - mix ecto.reset
   script:
     - mix format --check-formatted
     - mix credo
@@ -28,10 +25,11 @@ test:
   coverage: '/\[TOTAL\]\s+(\d+\.\d+)%/'
 
 review:
-  image: ruby:2.1
   stage: test
-  script:
+  image: ruby:2.1
+  before_script:
     - gem install danger-gitlab
+  script:
     - danger
   except:
     - master
