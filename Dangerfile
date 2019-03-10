@@ -46,8 +46,8 @@ warn "MR does not close any issues. Should close at least one" if
   gitlab.mr_title.index /closes #\d+/i
 
 # MAKE SURE THAT WE TRACK ALL NEW TODOS.
-todoist.warn_for_todos
-todoist.print_todos_table
+# todoist.warn_for_todos
+# todoist.print_todos_table
 # TODO: new instance in Dangerfile
 
 # ========
