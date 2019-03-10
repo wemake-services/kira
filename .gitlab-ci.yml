@@ -30,6 +30,6 @@ review:
   before_script:
     - gem install danger-gitlab
   script:
-    - danger
+    - danger --fail-on-errors=true
   except:
     - master
