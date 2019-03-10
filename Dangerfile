@@ -1,3 +1,18 @@
+# Code review automation
+# https://github.com/danger/danger
+#
+# Policy:
+# 1. Use `warn` for all thnigs that are important, but not related to code.
+#   So it will be possible to fix these issues without creating new commits
+# 2. Use `failure` for all things that are important and are related to code.
+#   So people will have to create new commits to address these issues.
+# 3. Use `sticky: true` for things that
+#   show attempts for potentially risky behaviour:
+#   like secrets or config modification, too big submissions, etc.
+# 4. Place `failure`s after all `warn` rules
+#   to collect maximum amount of issues in a code review comment
+
+
 # WARN WHEN AN MR IS CLASSED AS WORK IN PROGRESS.
 warn "MR is classed as Work in Progress" if
   gitlab.mr_title.include? "WIP:"
@@ -22,6 +37,19 @@ if has_app_changes && !tests_updated
   Consider updating or adding to the tests to match the library changes.")
 end
 
+# ENSURE THERE IS A SUMMARY FOR A MR.
+warn "Please provide a summary in the MR description, at least 50 chars" if
+  gitlab.mr_body.length < 50
+
+# ENSURE THAT EACH MERGE REQUEST CLOSES AT LEAST ONE ISSUE.
+warn "MR does not close any issues. Should close at least one" if
+  gitlab.mr_title.index /closes #\d+/i
+
+# MAKE SURE THAT WE TRACK ALL NEW TODOS.
+todoist.warn_for_todos
+todoist.print_todos_table
+# TODO: new instance in Dangerfile
+
 # ========
 # Critical
 # Comes after warnings to collect maximum number of messages
@@ -30,16 +58,8 @@ end
 failure "Please re-submit this MR to master branch" if
   gitlab.branch_for_merge != "master"
 
-# ENSURE THERE IS A SUMMARY FOR A MR.
-failure "Please provide a summary in the MR description" if
-  gitlab.mr_body.length < 50
-
-# ENSURE THAT EACH MERGE REQUEST CLOSES AT LEAST ONE ISSUE.
-failure "MR does not close any issues. Should close at least one" if
-  gitlab.mr_title.index /closes #\d+/i
-
 # FAIL REALLY BIG DIFFS.
-failure "We cannot handle the scale of this MR" if
+failure "We cannot handle the scale of this MR", sticky: true if
   git.lines_of_code > 10000
 
 # FAIL WHEN GIT HAS MERGE COMMITS.
