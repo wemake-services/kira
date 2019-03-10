@@ -29,7 +29,7 @@ review:
   image: ruby:2.3
   before_script:
     # Installing review bot and plugins to it:
-    - gem install danger-gitlab
+    - gem install danger-gitlab danger-todoist
   script:
     - danger --fail-on-errors=true
   except:
