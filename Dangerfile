@@ -53,6 +53,10 @@ warn "Please make sure to auto-remove source branch" if
 warn "Please make sure to mark this MR to be auto-merged on CI success" if
   not gitlab.mr_json["merge_when_pipeline_succeeds"]
 
+# MAKE SURE THAT MR COMMITS WILL BE SQUASHED.
+warn "Please make sure to squash commits" if
+  not gitlab.mr_json["squash"]
+
 # MAKE SURE THAT MR CAN BE MERGED VIA UI.
 warn "This MR cannot be merged, you will need to rebase it or assign Kira" if
   gitlab.mr_json["merge_status"] != "can_be_merged"
