@@ -43,12 +43,24 @@ warn "Please provide a summary in the MR description, at least 50 chars" if
 
 # ENSURE THAT EACH MERGE REQUEST CLOSES AT LEAST ONE ISSUE.
 warn "MR does not close any issues. Should close at least one" if
-  gitlab.mr_title.index /closes #\d+/i
+  not gitlab.mr_title.index /closes #\d+/i
+
+# MAKE SURE THAT BRANCH WILL BE REMOVED.
+warn "Please make sure to auto-remove source branch" if
+  not gitlab.mr_json["should_remove_source_branch"]
+
+# MAKE SURE THAT MR WILL BE AUTO MERGED.
+warn "Please make sure to mark this MR to be auto-merged on CI success" if
+  not gitlab.mr_json["merge_when_pipeline_succeeds"]
+
+# MAKE SURE THAT MR CAN BE MERGED VIA UI.
+warn "This MR cannot be merged, you will need to rebase it or assign Kira" if
+  gitlab.mr_json["merge_status"] != "can_be_merged"
 
 # MAKE SURE THAT WE TRACK ALL NEW TODOS.
+todoist.message = "Things to do later, consider creating task chains"
 todoist.warn_for_todos
 todoist.print_todos_table
-# TODO: new instance in Dangerfile
 
 # ========
 # Critical
