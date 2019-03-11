@@ -7,9 +7,6 @@
   before_script:
     - bundle install -j $(nproc) --path vendor
   script: bundle exec ruby ./generic-update-script.rb
-  cache:
-    paths:
-      - vendor/
   only:
     - schedules
 
