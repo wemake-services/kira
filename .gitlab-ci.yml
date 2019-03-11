@@ -11,10 +11,11 @@
     PACKAGE_MANAGER: $CI_JOB_NAME
   before_script:
     - gem install dependabot-omnibus
-  script: bundle exec ruby ./generic-update-script.rb
+  # TODO: use cache for gem, too heavy
+  script: ruby ./generic-update-script.rb
   only:
     variables:
-      - $CI_PIPELINE_SOURCE = schedule
+      - $CI_PIPELINE_SOURCE == "schedule"
 
 # Real jobs are here:
 
