@@ -1,26 +1,43 @@
-image: elixir:1.8.1-slim
+.dependabot:
+  # Base image for dependabot to update our dependencies
+  # https://github.com/dependabot/dependabot-script
+  image: dependabot/dependabot-core
+  variables:
+    PACKAGE_MANAGER: $CI_JOB_NAME
+  before_script:
+    - bundle install -j $(nproc) --path vendor
+  script: bundle exec ruby ./generic-update-script.rb
+  cache:
+    paths:
+      - vendor/
+  only:
+    - schedules
 
-services:
-  - postgres:latest
-
-variables:
-  POSTGRES_DB: test_test
-  POSTGRES_HOST: postgres
-  POSTGRES_USER: postgres
-  POSTGRES_PASSWORD: "postgres"
-  MIX_ENV: "test"
-
-before_script:
-  # Installing required libs:
-  - apt-get update && apt-get -y install postgresql-client
-  # Installing elixir deps:
-  - mix local.hex --force && mix local.rebar --force
-  - mix do deps.get, deps.compile
-  # Setting up database:
-  - mix ecto.reset
+hex:
+  extends: .dependabot
+  only:
+    variables:
+      - $PACKAGE_MANAGER_SET =~ /\bhex\b/
 
 test:
   stage: test
+  image: elixir:1.8.1-slim
+  variables:
+    POSTGRES_DB: test_test
+    POSTGRES_HOST: postgres
+    POSTGRES_USER: postgres
+    POSTGRES_PASSWORD: "postgres"
+    MIX_ENV: "test"
+  services:
+    - postgres:latest
+  before_script:
+    # Installing required libs:
+    - apt-get update && apt-get -y install postgresql-client
+    # Installing elixir deps:
+    - mix local.hex --force && mix local.rebar --force
+    - mix do deps.get, deps.compile
+    # Setting up database:
+    - mix ecto.reset
   script:
     - mix format --check-formatted
     - mix credo
