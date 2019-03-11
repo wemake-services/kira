@@ -1,22 +1,32 @@
+---
+
+# Abstract jobs for future reuse:
+
 .dependabot:
   # Base image for dependabot to update our dependencies
   # https://github.com/dependabot/dependabot-script
+  stage: build
   image: dependabot/dependabot-core
   variables:
     PACKAGE_MANAGER: $CI_JOB_NAME
   before_script:
-    - bundle install -j $(nproc) --path vendor
+    - gem install dependabot-omnibus
   script: bundle exec ruby ./generic-update-script.rb
   only:
-    - schedules
+    variables:
+      - $CI_PIPELINE_SOURCE = schedule
+
+# Real jobs are here:
 
 hex:
+  # Updates our `mix.exs` and `mix.lock` dependencies:
   extends: .dependabot
   only:
     variables:
       - $PACKAGE_MANAGER_SET =~ /\bhex\b/
 
 test:
+  # Project's specific CI:
   stage: test
   image: elixir:1.8.1-slim
   variables:
