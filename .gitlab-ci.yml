@@ -13,9 +13,6 @@
     - gem install dependabot-omnibus
   # TODO: use cache for gem, too heavy
   script: ruby ./generic-update-script.rb
-  only:
-    variables:
-      - $CI_PIPELINE_SOURCE == "schedule"
 
 # Real jobs are here:
 
@@ -24,6 +21,7 @@ hex:
   extends: .dependabot
   only:
     variables:
+      - $CI_PIPELINE_SOURCE == "schedule"
       - $PACKAGE_MANAGER_SET =~ /\bhex\b/
 
 test:
@@ -51,3 +49,5 @@ test:
     - mix credo
     - mix test --cover --timeout 1000
   coverage: '/\[TOTAL\]\s+(\d+\.\d+)%/'
+  except:
+    - schedules
