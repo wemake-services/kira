@@ -1,7 +1,7 @@
 defmodule KiraTest.Usecases.RenewProjectUsersTest do
   use Kira.DataCase
+  use KiraTest.TeslaMock
 
-  import Mox
   import KiraTest.Factory
   import Tesla.Mock, only: [json: 1]
 
@@ -10,13 +10,7 @@ defmodule KiraTest.Usecases.RenewProjectUsersTest do
   alias Kira.Usecases.RenewProjectUsers
   alias KiraTest.Accounts.Services.Providers.GitlabUsers.Mock
 
-  setup :verify_on_exit!
-
-  setup do
-    Application.put_env(:tesla, :adapter, Mock)
-
-    :ok
-  end
+  mock(Mock)
 
   describe "renew project users usecase, no existing users" do
     setup do
@@ -94,9 +88,10 @@ defmodule KiraTest.Usecases.RenewProjectUsersTest do
 
       assert length(context) == 1
 
-      [%User{uid: uid1}, %User{uid: uid2}] = hd(context).participants
+      [%User{id: id1, uid: uid1}, %User{uid: uid2}] = hd(context).participants
 
       assert uid1 == Enum.at(project.participants, 0).uid
+      assert id1 == Enum.at(project.participants, 0).id
       assert uid2 == new_user["id"]
     end
 
@@ -123,11 +118,13 @@ defmodule KiraTest.Usecases.RenewProjectUsersTest do
 
       assert length(context) == 1
 
-      [%User{uid: uid1}, %User{uid: uid2}, %User{uid: uid3}] =
+      [%User{id: id1, uid: uid1}, %User{id: id2, uid: uid2}, %User{uid: uid3}] =
         hd(context).participants
 
       assert uid1 == Enum.at(project.participants, 0).uid
+      assert id1 == Enum.at(project.participants, 0).id
       assert uid2 == Enum.at(project.participants, 1).uid
+      assert id2 == Enum.at(project.participants, 1).id
       assert uid3 == new_user["id"]
     end
   end

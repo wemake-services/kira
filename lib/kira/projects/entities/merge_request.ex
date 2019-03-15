@@ -1,21 +1,29 @@
-defmodule Kira.Projects.CodeReview do
+defmodule Kira.Projects.Entities.MergeRequest do
+  @moduledoc """
+  Represents `MergeRequest` domain entity from some `Project`.
+
+  This entity is actually a code change request for Gitlab.
+  It is later used to build a prioritized queue.
+  """
+
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias Kira.Accounts.Entities.{User, Project}
+  alias Kira.Accounts.Entities.User
+  alias Kira.Projects.Entities.Project
 
   @fields ~w(
-    uid iid state merge_status origin_date
+    uid iid state merge_status origin_timestamp
     project_id author_id assignee_id
   )a
 
   @derive {Jason.Encoder, only: @fields}
-  schema "code_reviews" do
+  schema "merge_requests" do
     field :uid, :integer
     field :iid, :integer
 
     field :merge_status, :string
-    field :origin_date, :utc_datetime
+    field :origin_timestamp, :utc_datetime
     field :state, :string
 
     # TODO: add pipeline status
@@ -27,20 +35,19 @@ defmodule Kira.Projects.CodeReview do
   end
 
   @doc false
-  def changeset(code_review, attrs) do
-    code_review
+  def changeset(merge_request, attrs) do
+    merge_request
     |> cast(attrs, @fields)
     |> validate_required([
       :uid,
       :iid,
       :state,
       :merge_status,
-      :origin_date,
+      :origin_timestamp,
       :project_id,
       :author_id
     ])
     |> unique_constraint(:uid)
-    |> unique_constraint(:project_code_review, name: :project_code_review)
-    |> unique_constraint(:assignee_id)
+    |> unique_constraint(:project_merge_request, name: :project_merge_request)
   end
 end

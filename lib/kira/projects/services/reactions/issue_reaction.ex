@@ -1,6 +1,6 @@
 defmodule Kira.Projects.Services.Reactions.IssueReaction do
   @moduledoc """
-  Leaves a reaction emoji on processed issues.
+  Leaves a reaction emoji on processed `Issue`s.
   """
 
   use Exop.Operation

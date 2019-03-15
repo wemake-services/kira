@@ -26,6 +26,8 @@ defmodule KiraWeb.Webhooks.IssueWebhook do
       "object_kind" => "issue",
       "project" => %{"id" => project_uid},
       "object_attributes" => %{
+        "author_id" => author_uid,
+        "assignee_id" => assignee_uid,
         "id" => issue_uid,
         "iid" => issue_iid,
         "state" => issue_state,
@@ -36,6 +38,8 @@ defmodule KiraWeb.Webhooks.IssueWebhook do
 
     [
       project_uid: project_uid,
+      author_uid: author_uid,
+      assignee_uid: assignee_uid,
       attrs: %{
         "uid" => issue_uid,
         "iid" => issue_iid,

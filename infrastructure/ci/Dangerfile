@@ -2,7 +2,7 @@
 # https://github.com/danger/danger
 #
 # Policy:
-# 1. Use `warn` for all thnigs that are important, but not related to code.
+# 1. Use `warn` for all things that are important, but not related to code.
 #   So it will be possible to fix these issues without creating new commits
 # 2. Use `failure` for all things that are important and are related to code.
 #   So people will have to create new commits to address these issues.
@@ -19,9 +19,13 @@ warn "MR is classed as Work in Progress" if
 
 # HIGHLIGHT WITH A CLICKABLE LINK IF IMPORTANT FILES ARE CHANGED.
 important_files = [
-  "Dangerfile",
   ".gitlab-ci.yml",
-  "mix.exs"
+  ".gitignore",
+  "mix.exs",
+
+  # Infrastructure:
+  "infrastructure/ci/Dangerfile",
+  "infrastructure/ci/dependabot/generic-update-script.rb"
 ]
 
 important_files.each do |item|
@@ -42,27 +46,27 @@ warn "Please provide a summary in the MR description, at least 50 chars" if
   gitlab.mr_body.length < 50
 
 # ENSURE THAT EACH MERGE REQUEST CLOSES AT LEAST ONE ISSUE.
-warn "MR does not close any issues. Should close at least one" if
-  not gitlab.mr_title.index /closes #\d+/i
+warn "MR does not close any issues. Should close at least one" unless
+  gitlab.mr_title.index /closes #\d+/i
 
 # MAKE SURE THAT BRANCH WILL BE REMOVED.
-warn "Please make sure to auto-remove source branch" if
-  not gitlab.mr_json["should_remove_source_branch"]
+warn "Please make sure to auto-remove source branch" unless
+  gitlab.mr_json["should_remove_source_branch"]
 
 # MAKE SURE THAT MR WILL BE AUTO MERGED.
-warn "Please make sure to mark this MR to be auto-merged on CI success" if
-  not gitlab.mr_json["merge_when_pipeline_succeeds"]
+warn "Please make sure to mark this MR to be auto-merged on CI success" unless
+  gitlab.mr_json["merge_when_pipeline_succeeds"]
 
 # MAKE SURE THAT MR COMMITS WILL BE SQUASHED.
-warn "Please make sure to squash commits" if
-  not gitlab.mr_json["squash"]
+warn "Please make sure to squash commits" unless
+  gitlab.mr_json["squash"]
 
 # MAKE SURE THAT MR CAN BE MERGED VIA UI.
 warn "This MR cannot be merged, you will need to rebase it or assign Kira" if
   gitlab.mr_json["merge_status"] != "can_be_merged"
 
 # MAKE SURE THAT WE TRACK ALL NEW TODOS.
-todoist.message = "Things to do later, consider creating task chains"
+todoist.message = "Consider creating task chains out of new todos in the code"
 todoist.warn_for_todos
 todoist.print_todos_table
 
@@ -76,9 +80,14 @@ failure "Please re-submit this MR to master branch" if
 
 # FAIL REALLY BIG DIFFS.
 failure "We cannot handle the scale of this MR", sticky: true if
-  git.lines_of_code > 10000
+  git.lines_of_code > 3000
+
+# TODO: enforce commit style, rework
+# https://github.com/vuejs/vue/blob/dev/.github/COMMIT_CONVENTION.md
+# https://github.com/conventional-changelog/standard-version/issues/313
+# /^(revert: )?(feat|fix|docs|refactor|test|chore)(\(.+\))?: .{1,50}/
 
 # FAIL WHEN GIT HAS MERGE COMMITS.
-if git.commits.any? { |c| c.message =~ /^Merge branch 'master'/ }
+if git.commits.any? { |c| c.message =~ /^Merge branch/ }
   failure "Please rebase to get rid of the merge commits in this MR"
 end

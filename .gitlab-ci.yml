@@ -1,13 +1,43 @@
-variables:
-  POSTGRES_DB: test_test
-  POSTGRES_HOST: postgres
-  POSTGRES_USER: postgres
-  POSTGRES_PASSWORD: "postgres"
-  MIX_ENV: "test"
+---
+
+# Abstract jobs for future reuse:
+
+.dependabot:
+  # Base image for dependabot to update our dependencies
+  # https://github.com/dependabot/dependabot-script
+  stage: build
+  image: dependabot/dependabot-core
+  variables:
+    PACKAGE_MANAGER: $CI_JOB_NAME
+  before_script:
+    - cd infrastructure/ci/dependabot
+    - bundle install -j $(nproc) --path vendor
+  script: bundle exec ruby ./generic-update-script.rb
+  cache:
+    key: dependabot-gemspec
+    paths:
+      - vendor/
+  only:
+    - schedules
+
+
+# Real jobs are here:
+
+hex:
+  # Updates our `mix.exs` and `mix.lock` dependencies:
+  extends: .dependabot
+
 
 test:
+  # Project's specific CI:
   stage: test
   image: elixir:1.8.1-slim
+  variables:
+    POSTGRES_DB: test_test
+    POSTGRES_HOST: postgres
+    POSTGRES_USER: postgres
+    POSTGRES_PASSWORD: "postgres"
+    MIX_ENV: "test"
   services:
     - postgres:latest
   before_script:
@@ -21,16 +51,25 @@ test:
   script:
     - mix format --check-formatted
     - mix credo
+    # TODO: enable HTTPS
+    - mix sobelow --private -i Config.HTTPS
     - mix test --cover --timeout 1000
   coverage: '/\[TOTAL\]\s+(\d+\.\d+)%/'
+  except:
+    - schedules
+
 
 review:
+  # Installing review bot (danger) and plugins to it:
   stage: test
   image: ruby:2.3
   before_script:
-    # Installing review bot and plugins to it:
     - gem install danger-gitlab danger-todoist
   script:
-    - danger --fail-on-errors=true
+    - danger --fail-on-errors=true --dangerfile-path=infrastructure/ci
   except:
     - master
+    - schedules
+
+# TODO: create `npx standard-version` script
+# https://github.com/vuejs/vue/blob/dev/.github/COMMIT_CONVENTION.md

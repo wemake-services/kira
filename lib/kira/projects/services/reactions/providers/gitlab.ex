@@ -28,6 +28,10 @@ defmodule Kira.Projects.Services.Reactions.Providers.GitlabReaction do
     "#{issue_path(issue)}/notes/#{note_iid}/award_emoji"
   end
 
+  def merge_request_reaction_url(merge_request) do
+    "#{merge_request_path(merge_request)}/award_emoji"
+  end
+
   # HTTP API:
 
   def issue(issue) do
@@ -38,9 +42,21 @@ defmodule Kira.Projects.Services.Reactions.Providers.GitlabReaction do
     post!(issue_note_reaction_url(issue, note_iid), [])
   end
 
+  def merge_request(merge_request) do
+    post!(merge_request_reaction_url(merge_request), [])
+  end
+
   # Private:
 
+  defp project_path(project) do
+    "/projects/#{project.uid}"
+  end
+
   defp issue_path(issue) do
-    "/projects/#{issue.project.uid}/issues/#{issue.iid}"
+    "#{project_path(issue.project)}/issues/#{issue.iid}"
+  end
+
+  defp merge_request_path(merge_request) do
+    "#{project_path(merge_request.project)}/merge_requests/#{merge_request.iid}"
   end
 end

@@ -6,7 +6,7 @@ defmodule KiraTest.Factory do
   use ExMachina.Ecto, repo: Kira.Repo
 
   alias Kira.Accounts.Entities.User
-  alias Kira.Projects.Entities.{Issue, Project}
+  alias Kira.Projects.Entities.{Issue, MergeRequest, Project}
 
   def project_factory do
     project_name = Faker.Name.first_name()
@@ -28,13 +28,32 @@ defmodule KiraTest.Factory do
 
   def issue_factory(attrs) do
     state = Map.get(attrs, :state, "opened")
+    assignee = Map.get(attrs, :assignee, nil)
 
     %Issue{
       uid: sequence(:uid, &(&1 + 100)),
       iid: sequence(:iid, &(&1 + 1)),
       state: state,
+      due_date: Faker.Date.forward(100) |> Date.to_iso8601(),
       project: insert(:project),
-      due_date: "2029-01-10"
+      author: insert(:user),
+      assignee: assignee
+    }
+  end
+
+  def merge_request_factory(attrs) do
+    state = Map.get(attrs, :state, "opened")
+    assignee = Map.get(attrs, :assignee, nil)
+
+    %MergeRequest{
+      uid: sequence(:uid, &(&1 + 100)),
+      iid: sequence(:iid, &(&1 + 1)),
+      merge_status: "unchecked",
+      origin_timestamp: Faker.DateTime.backward(1) |> DateTime.to_iso8601(),
+      state: state,
+      project: insert(:project),
+      author: insert(:user),
+      assignee: assignee
     }
   end
 

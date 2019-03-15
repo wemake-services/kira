@@ -1,6 +1,6 @@
 defmodule Kira.Usecases.SaveIssueFromWebhook do
   @moduledoc """
-  We really want to have up-to-date information about new issues.
+  We really want to have up-to-date information about new `Issue`s.
   """
 
   use Exop.Chain
