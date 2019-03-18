@@ -2,7 +2,12 @@ defmodule KiraWeb.Webhooks.GitlabController do
   use KiraWeb, :controller
   require Logger
 
-  alias KiraWeb.Webhooks.{IssueWebhook, MergeRequestWebhook, NoteWebhook}
+  alias KiraWeb.Webhooks.{
+    IssueWebhook,
+    MergeRequestWebhook,
+    NoteWebhook,
+    PipelineWebhook
+  }
 
   plug KiraWeb.Plugs.GitlabSecretHeader
   action_fallback KiraWeb.FallbackController
@@ -22,6 +27,7 @@ defmodule KiraWeb.Webhooks.GitlabController do
 
   defp select_webhook_type(%{"object_kind" => "issue"}), do: IssueWebhook
   defp select_webhook_type(%{"object_kind" => "note"}), do: NoteWebhook
+  defp select_webhook_type(%{"object_kind" => "pipeline"}), do: PipelineWebhook
 
   defp select_webhook_type(%{"object_kind" => "merge_request"}),
     do: MergeRequestWebhook

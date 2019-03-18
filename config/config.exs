@@ -41,6 +41,7 @@ config :kira, Kira.Scheduler,
     {"@minutely", {Kira.Usecases.AssignUserToTask, :run, [[]]}},
 
     # Every thirty minutes:
+    # TODO: assignee may error
     {"*/30 * * * *", {Kira.Usecases.RenewProjectUsers, :run, [[]]}}
   ]
 

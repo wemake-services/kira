@@ -11,7 +11,13 @@ defmodule Kira.Accounts.Entities.User do
 
   alias Kira.Projects.Entities.Project
 
-  @fields ~w(uid username state expires_at access_level)a
+  @fields ~w(
+    uid
+    username
+    state
+    expires_at
+    access_level
+  )a
 
   @derive {Jason.Encoder, only: @fields}
   schema "users" do

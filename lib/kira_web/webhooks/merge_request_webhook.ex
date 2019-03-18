@@ -36,6 +36,8 @@ defmodule KiraWeb.Webhooks.MergeRequestWebhook do
 
         "state" => mr_state,
         "merge_status" => mr_merge_status,
+        "source_branch" => mr_source_branch,
+        "work_in_progress" => mr_work_in_progress,
         "created_at" => mr_origin_timestamp
       }
     } = webhook_data
@@ -49,6 +51,8 @@ defmodule KiraWeb.Webhooks.MergeRequestWebhook do
         "iid" => mr_iid,
         "state" => mr_state,
         "merge_status" => mr_merge_status,
+        "source_branch" => mr_source_branch,
+        "work_in_progress" => mr_work_in_progress,
         "origin_timestamp" =>
           TimeUtils.from_gitlab_timeformat!(mr_origin_timestamp)
       }

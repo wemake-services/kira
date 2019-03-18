@@ -11,7 +11,12 @@ defmodule Kira.Projects.Entities.Project do
 
   alias Kira.Accounts.Entities.{User, UserProject}
 
-  @fields ~w(uid name url path)a
+  @fields ~w(
+    uid
+    name
+    url
+    path
+  )a
 
   @derive {Jason.Encoder, only: @fields}
   schema "projects" do

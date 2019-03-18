@@ -44,6 +44,7 @@ defmodule KiraTest.Factory do
   def merge_request_factory(attrs) do
     state = Map.get(attrs, :state, "opened")
     assignee = Map.get(attrs, :assignee, nil)
+    work_in_progress = Map.get(attrs, :work_in_progress, true)
 
     %MergeRequest{
       uid: sequence(:uid, &(&1 + 100)),
@@ -51,6 +52,8 @@ defmodule KiraTest.Factory do
       merge_status: "unchecked",
       origin_timestamp: Faker.DateTime.backward(1) |> DateTime.to_iso8601(),
       state: state,
+      source_branch: sequence(:source_branch, &"issue-#{&1}"),
+      work_in_progress: work_in_progress,
       project: insert(:project),
       author: insert(:user),
       assignee: assignee

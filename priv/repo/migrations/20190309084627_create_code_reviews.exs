@@ -9,8 +9,12 @@ defmodule Kira.Repo.Migrations.CreateMergeRequests do
       add :state, :string
       add :merge_status, :string
       add :origin_timestamp, :utc_datetime
+      add :source_branch, :string
+      add :work_in_progress, :boolean
 
-      add :project_id, references(:projects, on_delete: :delete_all), null: false
+      add :project_id, references(:projects, on_delete: :delete_all),
+        null: false
+
       add :author_id, references(:users, on_delete: :nilify_all), null: true
       add :assignee_id, references(:users, on_delete: :nilify_all), null: true
 

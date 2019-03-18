@@ -12,11 +12,6 @@
 # 4. Place `failure`s after all `warn` rules
 #   to collect maximum amount of issues in a code review comment
 
-
-# WARN WHEN AN MR IS CLASSED AS WORK IN PROGRESS.
-warn "MR is classed as Work in Progress" if
-  gitlab.mr_title.include? "WIP:"
-
 # HIGHLIGHT WITH A CLICKABLE LINK IF IMPORTANT FILES ARE CHANGED.
 important_files = [
   ".gitlab-ci.yml",
@@ -53,17 +48,17 @@ warn "MR does not close any issues. Should close at least one" unless
 warn "Please make sure to auto-remove source branch" unless
   gitlab.mr_json["should_remove_source_branch"]
 
-# MAKE SURE THAT MR WILL BE AUTO MERGED.
-warn "Please make sure to mark this MR to be auto-merged on CI success" unless
-  gitlab.mr_json["merge_when_pipeline_succeeds"]
-
 # MAKE SURE THAT MR COMMITS WILL BE SQUASHED.
-warn "Please make sure to squash commits" unless
-  gitlab.mr_json["squash"]
+warn "Please make sure to squash commits" if
+  not gitlab.mr_json["squash"] and git.commits.length > 1
 
 # MAKE SURE THAT MR CAN BE MERGED VIA UI.
 warn "This MR cannot be merged, you will need to rebase it or assign Kira" if
   gitlab.mr_json["merge_status"] != "can_be_merged"
+
+# MAKE SURE THAT MR HAS TIME TRACKING ATTACHED.
+warn "This MR does not have time tracking, please attach your stats" if
+  gitlab.mr_json["time_stats"]["time_estimate"] == 0
 
 # MAKE SURE THAT WE TRACK ALL NEW TODOS.
 todoist.message = "Consider creating task chains out of new todos in the code"
@@ -74,18 +69,26 @@ todoist.print_todos_table
 # Critical
 # Comes after warnings to collect maximum number of messages
 
-# ONLY ACCEPT MRS TO THE DEVELOP BRANCH.
-failure "Please re-submit this MR to master branch" if
+# FAIL CI WHEN AN MR IS NOT CLASSIFIED AS WORK IN PROGRESS.
+failure(
+  "MR is not classified as Work in Progress.
+  So why is it running inside the CI?
+  See our policy about working with MRs.",
+  sticky: true
+) unless gitlab.mr_json["work_in_progress"]
+
+# ONLY ACCEPT MRS TO THE MASTER BRANCH.
+failure "Please re-submit this MR to master branch. This one can be closed" if
   gitlab.branch_for_merge != "master"
 
 # FAIL REALLY BIG DIFFS.
-failure "We cannot handle the scale of this MR", sticky: true if
+failure "We cannot handle the scale of this MR, split it", sticky: true if
   git.lines_of_code > 3000
 
-# TODO: enforce commit style, rework
+# TODO: enforce commit style, rework and add Kira Release Bot
 # https://github.com/vuejs/vue/blob/dev/.github/COMMIT_CONVENTION.md
 # https://github.com/conventional-changelog/standard-version/issues/313
-# /^(revert: )?(feat|fix|docs|refactor|test|chore)(\(.+\))?: .{1,50}/
+# /^(revert: )?(feat|fix|docs|refactor|test|chore)(\(.+\))?: .{1,50} refs #\d+/
 
 # FAIL WHEN GIT HAS MERGE COMMITS.
 if git.commits.any? { |c| c.message =~ /^Merge branch/ }

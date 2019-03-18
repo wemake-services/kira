@@ -17,6 +17,9 @@
     key: dependabot-gemspec
     paths:
       - vendor/
+  artifacts:
+    paths:
+      - vendor/
   only:
     - schedules
 
@@ -56,6 +59,7 @@ test:
     - mix test --cover --timeout 1000
   coverage: '/\[TOTAL\]\s+(\d+\.\d+)%/'
   except:
+    - master
     - schedules
 
 

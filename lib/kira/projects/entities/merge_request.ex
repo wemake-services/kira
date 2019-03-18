@@ -13,8 +13,16 @@ defmodule Kira.Projects.Entities.MergeRequest do
   alias Kira.Projects.Entities.Project
 
   @fields ~w(
-    uid iid state merge_status origin_timestamp
-    project_id author_id assignee_id
+    uid
+    iid
+    merge_status
+    origin_timestamp
+    state
+    source_branch
+    work_in_progress
+    project_id
+    author_id
+    assignee_id
   )a
 
   @derive {Jason.Encoder, only: @fields}
@@ -25,6 +33,8 @@ defmodule Kira.Projects.Entities.MergeRequest do
     field :merge_status, :string
     field :origin_timestamp, :utc_datetime
     field :state, :string
+    field :source_branch, :string
+    field :work_in_progress, :boolean
 
     # TODO: add pipeline status
     belongs_to :project, Project
@@ -41,9 +51,11 @@ defmodule Kira.Projects.Entities.MergeRequest do
     |> validate_required([
       :uid,
       :iid,
-      :state,
       :merge_status,
       :origin_timestamp,
+      :state,
+      :source_branch,
+      :work_in_progress,
       :project_id,
       :author_id
     ])

@@ -9,7 +9,9 @@ defmodule Kira.Repo.Migrations.CreateIssues do
       add :weight, :integer
       add :due_date, :date
 
-      add :project_id, references(:projects, on_delete: :delete_all), null: false
+      add :project_id, references(:projects, on_delete: :delete_all),
+        null: false
+
       add :author_id, references(:users, on_delete: :nilify_all), null: true
       add :assignee_id, references(:users, on_delete: :nilify_all), null: true
 
