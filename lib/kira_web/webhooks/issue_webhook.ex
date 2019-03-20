@@ -18,8 +18,9 @@ defmodule KiraWeb.Webhooks.IssueWebhook do
     |> apply(:run, [structure_payload(webhook_data)])
   end
 
-  # TODO: remove from queue on closed
   defp select_command("open"), do: Usecases.SaveIssueFromWebhook
+  defp select_command("update"), do: Usecases.UpdateIssueFromWebhook
+  defp select_command("close"), do: Usecases.CloseIssueFromWebhook
 
   defp structure_payload(webhook_data) do
     %{

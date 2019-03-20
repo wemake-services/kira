@@ -26,7 +26,7 @@
   },
   "object_attributes": {
     "author_id": 267715,
-    "closed_at": "2019-03-20 12:44:23 UTC",
+    "closed_at": null,
     "confidential": false,
     "created_at": "2019-03-20 12:40:47 UTC",
     "description": "Updated description text",
@@ -39,10 +39,10 @@
     "moved_to_id": null,
     "project_id": 10822323,
     "relative_position": 1073863323,
-    "state": "closed",
+    "state": "opened",
     "time_estimate": 0,
     "title": "Special issue for json docs",
-    "updated_at": "2019-03-20 12:44:23 UTC",
+    "updated_at": "2019-03-20 12:41:46 UTC",
     "updated_by_id": 267715,
     "weight": 1,
     "url": "https://gitlab.com/wemake.services/kira/issues/4",
@@ -51,7 +51,7 @@
     "human_time_estimate": null,
     "assignee_ids": [],
     "assignee_id": null,
-    "action": "close"
+    "action": "update"
   },
   "labels": [
     {
@@ -68,30 +68,21 @@
     }
   ],
   "changes": {
-    "updated_at": {
-      "previous": "2019-03-20 12:44:23 UTC",
-      "current": "2019-03-20 12:44:23 UTC"
+    "description": {
+      "previous": "Description text",
+      "current": "Updated description text"
     },
-    "labels": {
-      "previous": [],
-      "current": [
-        {
-          "id": 9918382,
-          "title": "elixir",
-          "color": "#9380dd",
-          "project_id": 10822323,
-          "created_at": "2019-03-12 00:08:22 UTC",
-          "updated_at": "2019-03-12 00:08:22 UTC",
-          "template": false,
-          "description": null,
-          "type": "ProjectLabel",
-          "group_id": null
-        }
-      ]
-    },
-    "total_time_spent": {
+    "last_edited_at": {
       "previous": null,
-      "current": 0
+      "current": "2019-03-20 12:41:46 UTC"
+    },
+    "last_edited_by_id": {
+      "previous": null,
+      "current": 267715
+    },
+    "updated_at": {
+      "previous": "2019-03-20 12:41:44 UTC",
+      "current": "2019-03-20 12:41:46 UTC"
     }
   },
   "repository": {

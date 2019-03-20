@@ -28,34 +28,45 @@
     "author_id": 267715,
     "closed_at": null,
     "confidential": false,
-    "created_at": "2019-02-16 07:19:50 UTC",
-    "description": "",
-    "due_date": "2019-02-17",
-    "id": 18281702,
-    "iid": 1,
+    "created_at": "2019-03-20 12:40:47 UTC",
+    "description": "Description text",
+    "due_date": "2019-03-31",
+    "id": 19288820,
+    "iid": 4,
     "last_edited_at": null,
     "last_edited_by_id": null,
     "milestone_id": null,
     "moved_to_id": null,
     "project_id": 10822323,
-    "relative_position": 1073857823,
+    "relative_position": 1073863323,
     "state": "opened",
     "time_estimate": 0,
-    "title": "Test issue",
-    "updated_at": "2019-02-16 07:19:50 UTC",
+    "title": "Special issue for json docs",
+    "updated_at": "2019-03-20 12:40:47 UTC",
     "updated_by_id": null,
-    "weight": 1,
-    "url": "https://gitlab.com/wemake.services/kira/issues/1",
+    "weight": 10,
+    "url": "https://gitlab.com/wemake.services/kira/issues/4",
     "total_time_spent": 0,
     "human_total_time_spent": null,
     "human_time_estimate": null,
-    "assignee_ids": [
-      267715
-    ],
-    "assignee_id": 267715,
+    "assignee_ids": [],
+    "assignee_id": null,
     "action": "open"
   },
-  "labels": [],
+  "labels": [
+    {
+      "id": 9918382,
+      "title": "elixir",
+      "color": "#9380dd",
+      "project_id": 10822323,
+      "created_at": "2019-03-12 00:08:22 UTC",
+      "updated_at": "2019-03-12 00:08:22 UTC",
+      "template": false,
+      "description": null,
+      "type": "ProjectLabel",
+      "group_id": null
+    }
+  ],
   "changes": {
     "author_id": {
       "previous": null,
@@ -63,23 +74,23 @@
     },
     "created_at": {
       "previous": null,
-      "current": "2019-02-16 07:19:50 UTC"
+      "current": "2019-03-20 12:40:47 UTC"
     },
     "description": {
       "previous": null,
-      "current": ""
+      "current": "Description text"
     },
     "due_date": {
       "previous": null,
-      "current": "2019-02-17"
+      "current": "2019-03-31"
     },
     "id": {
       "previous": null,
-      "current": 18281702
+      "current": 19288820
     },
     "iid": {
       "previous": null,
-      "current": 1
+      "current": 4
     },
     "project_id": {
       "previous": null,
@@ -87,7 +98,7 @@
     },
     "relative_position": {
       "previous": null,
-      "current": 1073857823
+      "current": 1073863323
     },
     "state": {
       "previous": null,
@@ -95,23 +106,30 @@
     },
     "title": {
       "previous": null,
-      "current": "Test issue"
+      "current": "Special issue for json docs"
     },
     "updated_at": {
       "previous": null,
-      "current": "2019-02-16 07:19:50 UTC"
+      "current": "2019-03-20 12:40:47 UTC"
     },
     "weight": {
       "previous": null,
-      "current": 1
+      "current": 10
     },
-    "assignees": {
+    "labels": {
       "previous": [],
       "current": [
         {
-          "name": "Nikita Sobolev",
-          "username": "sobolevn",
-          "avatar_url": "https://secure.gravatar.com/avatar/8c3a2ebf7c2b84f8390d99c7bf8c8a48?s=80\u0026d=identicon"
+          "id": 9918382,
+          "title": "elixir",
+          "color": "#9380dd",
+          "project_id": 10822323,
+          "created_at": "2019-03-12 00:08:22 UTC",
+          "updated_at": "2019-03-12 00:08:22 UTC",
+          "template": false,
+          "description": null,
+          "type": "ProjectLabel",
+          "group_id": null
         }
       ]
     },
@@ -125,12 +143,5 @@
     "url": "git@gitlab.com:wemake.services/kira.git",
     "description": "",
     "homepage": "https://gitlab.com/wemake.services/kira"
-  },
-  "assignees": [
-    {
-      "name": "Nikita Sobolev",
-      "username": "sobolevn",
-      "avatar_url": "https://secure.gravatar.com/avatar/8c3a2ebf7c2b84f8390d99c7bf8c8a48?s=80\u0026d=identicon"
-    }
-  ]
+  }
 }

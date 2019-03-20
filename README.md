@@ -15,6 +15,9 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
 
 ## TODO before release
 
+- Handle issue close
+- Handle issue change
+
 - Create `CodeReview` entity
 - Create `CodeReview` webhook controller
 - Create `Pipeline` entity
