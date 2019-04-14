@@ -35,6 +35,18 @@ test:
     - mix sobelow --private -i Config.HTTPS
     - mix test --cover --timeout 1000
   coverage: '/\[TOTAL\]\s+(\d+\.\d+)%/'
-  except:
-    - master
-    - schedules
+  only:
+    - merge_requests
+
+# Reviewing merge request:
+review:
+  stage: test
+  image: wemakeservices/kira-review:latest
+  variables:
+    # See: https://github.com/wemake-services/kira-review
+    DANGER_PLATFORMS: "elixir"
+  script:
+    - danger --fail-on-errors=true --fail-if-no-pr=true
+      --dangerfile=/danger/Dangerfile
+  only:
+    - merge_requests
