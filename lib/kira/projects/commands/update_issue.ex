@@ -34,6 +34,6 @@ defmodule Kira.Projects.Commands.UpdateIssue do
 
   # TODO: the same we do in tests, we need generic way to do that
   defp atomize_keys(dict) do
-    Map.new(dict, fn {k, v} -> {String.to_atom(k), v} end)
+    Map.new(dict, fn {k, v} -> {String.to_existing_atom(k), v} end)
   end
 end

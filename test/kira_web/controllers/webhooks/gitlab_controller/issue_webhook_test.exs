@@ -98,8 +98,9 @@ defmodule KiraWebTest.Webhooks.GitlabController.IssueWebhookTest do
       issue: issue,
       conn: conn
     } do
+      # TODO: refactor, this is ugly
       issue_payload =
-        issue  # TODO: refactor, this is ugly
+        issue
         |> Map.from_struct()
         |> Map.delete(:__meta__)
         |> to_string_map()
@@ -125,7 +126,8 @@ defmodule KiraWebTest.Webhooks.GitlabController.IssueWebhookTest do
     end
   end
 
-  defp to_string_map(dict) do  # TODO: refactor, make helper
+  # TODO: refactor, make helper
+  defp to_string_map(dict) do
     Map.new(dict, fn {k, v} -> {Atom.to_string(k), v} end)
   end
 end

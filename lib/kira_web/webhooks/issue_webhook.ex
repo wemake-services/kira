@@ -41,6 +41,7 @@ defmodule KiraWeb.Webhooks.IssueWebhook do
       project_uid: project_uid,
       author_uid: author_uid,
       assignee_uid: assignee_uid,
+      # TODO: here I mix string and atom keys. Needs a fix
       attrs: %{
         "uid" => issue_uid,
         "iid" => issue_iid,

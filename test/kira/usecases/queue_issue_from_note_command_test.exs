@@ -5,8 +5,8 @@ defmodule KiraTest.Usecases.QueueIssueFromNoteTest do
   import KiraTest.Factory
 
   alias Kira.Projects.Services.Reactions.Providers.GitlabReaction
-  alias KiraTest.Projects.Services.Reactions.Providers.GitlabReaction.Mock
   alias Kira.Usecases.QueueIssueFromNote
+  alias KiraTest.Projects.Services.Reactions.Providers.GitlabReaction.Mock
 
   mock(Mock)
 
