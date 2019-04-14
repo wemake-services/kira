@@ -8,13 +8,16 @@ defmodule Kira.Projects.Services.NoteCommands.QueueIssue do
 
   use Exop.Operation
 
+  # TODO: move to configuration
+  @bot_username "@kira-bot"
+
   parameter(:note_text, type: :string)
 
   def process(%{note_text: note_text} = params) do
     # TODO: this is a pretty dump implementation of this command
     # it is required to refactor it
-    "\@kira-bot\s+queue"
-    |> Regex.compile!()
+    "^#{Regex.escape(@bot_username)}\\s+queue"
+    |> Regex.compile!([:multiline])
     |> Regex.run(note_text)
     |> maybe_interupt()
 

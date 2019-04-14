@@ -1,0 +1,61 @@
+{
+  "object_kind": "push",
+  "event_name": "push",
+  "before": "0000000000000000000000000000000000000000",
+  "after": "e137038adb75218710669bc0e6ddf2e38798bfe4",
+  "ref": "refs/heads/feature-webhook",
+  "checkout_sha": "e137038adb75218710669bc0e6ddf2e38798bfe4",
+  "message": null,
+  "user_id": 267715,
+  "user_name": "Nikita Sobolev",
+  "user_username": "sobolevn",
+  "user_email": "",
+  "user_avatar": "https://secure.gravatar.com/avatar/8c3a2ebf7c2b84f8390d99c7bf8c8a48?s=80\u0026d=identicon",
+  "project_id": 10822323,
+  "project": {
+    "id": 10822323,
+    "name": "kira",
+    "description": "",
+    "web_url": "https://gitlab.com/wemake.services/kira",
+    "avatar_url": null,
+    "git_ssh_url": "git@gitlab.com:wemake.services/kira.git",
+    "git_http_url": "https://gitlab.com/wemake.services/kira.git",
+    "namespace": "wemake.services",
+    "visibility_level": 0,
+    "path_with_namespace": "wemake.services/kira",
+    "default_branch": "master",
+    "ci_config_path": null,
+    "homepage": "https://gitlab.com/wemake.services/kira",
+    "url": "git@gitlab.com:wemake.services/kira.git",
+    "ssh_url": "git@gitlab.com:wemake.services/kira.git",
+    "http_url": "https://gitlab.com/wemake.services/kira.git"
+  },
+  "commits": [
+    {
+      "id": "e137038adb75218710669bc0e6ddf2e38798bfe4",
+      "message": "Update README.md",
+      "timestamp": "2019-03-09T09:11:43Z",
+      "url": "https://gitlab.com/wemake.services/kira/commit/e137038adb75218710669bc0e6ddf2e38798bfe4",
+      "author": {
+        "name": "Nikita Sobolev",
+        "email": "mail@sobolevn.me"
+      },
+      "added": [],
+      "modified": [
+        "README.md"
+      ],
+      "removed": []
+    }
+  ],
+  "total_commits_count": 1,
+  "push_options": [],
+  "repository": {
+    "name": "kira",
+    "url": "git@gitlab.com:wemake.services/kira.git",
+    "description": "",
+    "homepage": "https://gitlab.com/wemake.services/kira",
+    "git_http_url": "https://gitlab.com/wemake.services/kira.git",
+    "git_ssh_url": "git@gitlab.com:wemake.services/kira.git",
+    "visibility_level": 0
+  }
+}

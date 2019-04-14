@@ -1,23 +1,47 @@
 defmodule KiraTest.Usecases.SaveIssueFromWebhookTest do
   use Kira.DataCase
+  use KiraTest.TeslaMock
 
-  import Mox
   import KiraTest.Factory
 
   alias Kira.Projects.Services.Reactions.Providers.GitlabReaction
   alias Kira.Usecases.SaveIssueFromWebhook
   alias KiraTest.Projects.Services.Reactions.Providers.GitlabReaction.Mock
 
+  mock(Mock)
+
   describe "save issue from webhook usecase" do
-    setup :verify_on_exit!
-
     setup do
-      Application.put_env(:tesla, :adapter, Mock)
-
-      {:ok, project: insert(:project)}
+      {:ok, project: insert(:project), user: insert(:user)}
     end
 
-    test "valid issue webhook", %{project: project} do
+    test "valid issue webhook with assignee", %{
+      project: project,
+      user: user
+    } do
+      context = execute_command(project, user, user.uid)
+
+      assert context.entity.id > 0
+      assert context.entity.project_id == project.id
+      assert context.entity.author_id == user.id
+      assert context.entity.assignee_id == user.id
+      assert context.entity.state == "opened"
+    end
+
+    test "valid issue webhook without assignee", %{
+      project: project,
+      user: user
+    } do
+      context = execute_command(project, user)
+
+      assert context.entity.id > 0
+      assert context.entity.project_id == project.id
+      assert context.entity.author_id == user.id
+      assert context.entity.assignee_id == nil
+      assert context.entity.state == "opened"
+    end
+
+    defp execute_command(project, user, assignee_uid \\ nil) do
       issue = string_params_for(:issue)
       issue_iid = issue["iid"]
 
@@ -35,10 +59,12 @@ defmodule KiraTest.Usecases.SaveIssueFromWebhookTest do
       {:ok, context} =
         SaveIssueFromWebhook.run(
           project_uid: project.uid,
+          author_uid: user.uid,
+          assignee_uid: assignee_uid,
           attrs: issue
         )
 
-      assert context.entity.state == "opened"
+      context
     end
   end
 end

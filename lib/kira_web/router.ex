@@ -1,12 +1,14 @@
 defmodule KiraWeb.Router do
   use KiraWeb, :router
 
+  @csp "default-src 'self'; script-src 'self'; style-src 'self';"
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
     plug :fetch_flash
     plug :protect_from_forgery
-    plug :put_secure_browser_headers
+    plug :put_secure_browser_headers, %{"content-security-policy" => @csp}
   end
 
   pipeline :api do
@@ -22,6 +24,6 @@ defmodule KiraWeb.Router do
   scope "/api", KiraWeb do
     pipe_through :api
 
-    resources "/webhook/issues", Webhooks.IssueController, only: [:create]
+    resources "/webhook/gitlab", Webhooks.GitlabController, only: [:create]
   end
 end

@@ -1,32 +1,7 @@
 ---
 
 # Abstract jobs for future reuse:
-
-.dependabot:
-  # Base image for dependabot to update our dependencies
-  # https://github.com/dependabot/dependabot-script
-  stage: build
-  image: dependabot/dependabot-core
-  variables:
-    PACKAGE_MANAGER: $CI_JOB_NAME
-  before_script:
-    - gem install dependabot-omnibus
-  # TODO: use cache for gem, too heavy
-  script: ruby ./generic-update-script.rb
-
-# Real jobs are here:
-
-hex:
-  # Updates our `mix.exs` and `mix.lock` dependencies:
-  extends: .dependabot
-  only:
-    variables:
-      - $CI_PIPELINE_SOURCE == "schedule"
-      - $PACKAGE_MANAGER_SET =~ /\bhex\b/
-
-test:
-  # Project's specific CI:
-  stage: test
+.elixir:
   image: elixir:1.8.1-slim
   variables:
     POSTGRES_DB: test_test
@@ -44,10 +19,33 @@ test:
     - mix do deps.get, deps.compile
     # Setting up database:
     - mix ecto.reset
+
+
+# Real jobs are here:
+
+test:
+  # Project's specific CI:
+  extends: .elixir
+  stage: test
   script:
     - mix format --check-formatted
     - mix credo
+    # TODO: enable HTTPS
+    - mix sobelow --private -i Config.HTTPS
     - mix test --cover --timeout 1000
   coverage: '/\[TOTAL\]\s+(\d+\.\d+)%/'
-  except:
-    - schedules
+  only:
+    - merge_requests
+
+# Reviewing merge request:
+review:
+  stage: test
+  image: wemakeservices/kira-review:latest
+  variables:
+    # See: https://github.com/wemake-services/kira-review
+    DANGER_PLATFORMS: "elixir"
+  script:
+    - danger --fail-on-errors=true --fail-if-no-pr=true
+      --dangerfile=/danger/Dangerfile
+  only:
+    - merge_requests

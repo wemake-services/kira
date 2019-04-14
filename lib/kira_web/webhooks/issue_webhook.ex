@@ -18,14 +18,17 @@ defmodule KiraWeb.Webhooks.IssueWebhook do
     |> apply(:run, [structure_payload(webhook_data)])
   end
 
-  # TODO: remove from queue on closed
   defp select_command("open"), do: Usecases.SaveIssueFromWebhook
+  defp select_command("update"), do: Usecases.UpdateIssueFromWebhook
+  defp select_command("close"), do: Usecases.CloseIssueFromWebhook
 
   defp structure_payload(webhook_data) do
     %{
       "object_kind" => "issue",
       "project" => %{"id" => project_uid},
       "object_attributes" => %{
+        "author_id" => author_uid,
+        "assignee_id" => assignee_uid,
         "id" => issue_uid,
         "iid" => issue_iid,
         "state" => issue_state,
@@ -36,6 +39,9 @@ defmodule KiraWeb.Webhooks.IssueWebhook do
 
     [
       project_uid: project_uid,
+      author_uid: author_uid,
+      assignee_uid: assignee_uid,
+      # TODO: here I mix string and atom keys. Needs a fix
       attrs: %{
         "uid" => issue_uid,
         "iid" => issue_iid,

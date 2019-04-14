@@ -1,4 +1,4 @@
-defmodule Kira.Accounts.Services.AssignUser do
+defmodule Kira.Accounts.Services.AssignUserToTask do
   @moduledoc """
   Assigns next free `User` to the most important task in the queue.
   """
@@ -6,14 +6,16 @@ defmodule Kira.Accounts.Services.AssignUser do
   use Exop.Operation
 
   @doc """
-  Finds the developer-task pair to assign.
+  Finds the `User`-task pair to assign.
 
   Assign rules:
-  1. One developer can only do one task at a time
-  2. Developers can only be assigned if their state is `:active`
-  3. Code reviews value more that issues
-  4. Issues value by weight and due date
-  5. We only assign issues if their state is `:queued`
+  1. One `User` can only do one task at a time
+  2. `User`s can only be assigned if their state is `:active`
+  3. `CodeReview`s value more than `Issue`s
+  4. `CodeReview`s value by created_date, first in - first out
+  5. `CodeReview` can not be performed by the same `User` who created it
+  6. `Issue`s value by weight and due date
+  7. We only assign `Issue`s if their state is `:queued`
 
   That's how logic looks like:
 
@@ -39,9 +41,5 @@ defmodule Kira.Accounts.Services.AssignUser do
     # |> Enum.map(&FetchProjectParticipants.run(project_uid: &1.uid))
     # |> Enum.map(&RenewProjectParticipants.run/1)
     # |> Enum.map(&do_assign/1)
-  end
-
-  defp do_assign(project) do
-    project
   end
 end

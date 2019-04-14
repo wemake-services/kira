@@ -43,3 +43,6 @@ npm-debug.log
 
 # Custom VSCode extensions:
 /.elixir_ls/
+
+# Sobelow version:
+.sobelow

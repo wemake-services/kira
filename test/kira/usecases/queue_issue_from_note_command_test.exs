@@ -1,19 +1,17 @@
 defmodule KiraTest.Usecases.QueueIssueFromNoteTest do
   use Kira.DataCase
+  use KiraTest.TeslaMock
 
-  import Mox
   import KiraTest.Factory
 
   alias Kira.Projects.Services.Reactions.Providers.GitlabReaction
   alias Kira.Usecases.QueueIssueFromNote
   alias KiraTest.Projects.Services.Reactions.Providers.GitlabReaction.Mock
 
+  mock(Mock)
+
   describe "queue issue usecase" do
-    setup :verify_on_exit!
-
     setup do
-      Application.put_env(:tesla, :adapter, Mock)
-
       {:ok, issue: insert(:issue), note_iid: 123}
     end
 

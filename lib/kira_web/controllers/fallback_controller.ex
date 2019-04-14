@@ -20,6 +20,7 @@ defmodule KiraWeb.FallbackController do
   which should be treated as: it is already in the correct state, no worries.
   """
   def call(conn, {:interrupt, :idempotence}) do
+    # TODO: our API is not fully tested for idempotence requests
     send_resp(conn, 200, "idempotence")
   end
 end
