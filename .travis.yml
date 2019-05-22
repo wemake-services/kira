@@ -6,7 +6,9 @@ elixir:
   - 1.8.1
 
 env:
-  - MIX_ENV="test"
+  - MIX_ENV="test";
+    KIRA_GITLAB_SECRET_HEADER_VALUE="123";
+    KIRA_GITLAB_PERSONAL_TOKEN="fake";
 
 before_install:
   - mix local.hex --force && mix local.rebar --force

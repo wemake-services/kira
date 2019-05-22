@@ -1,7 +1,0 @@
-# Special file to specify who is responsible for what.
-# In RSDP architect is responsible for all code in the project.
-# But, there might be different setups.
-# Reference: https://docs.gitlab.com/ee/user/project/code_owners.html
-
-# Architect
-* @sobolevn

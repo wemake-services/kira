@@ -1,9 +1,7 @@
 ## How is it now?
 
-## How should it be?
 
-/estimate Xh
-/label ~bug
+## How should it be?
 
 
 ## Links
@@ -23,8 +21,3 @@ Commit hash:
 
 1. Step 1
 2. Step 2
-
-
-## How to fix
-
-Please, read below: [how to fix a bug](https://wemake.services/meta/rsdp/closing-issues#how-to-fix-a-bug).
