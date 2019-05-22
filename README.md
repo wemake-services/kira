@@ -2,6 +2,8 @@
 
 [![wemake.services](https://img.shields.io/badge/%20-wemake.services-green.svg?label=%20&logo=data%3Aimage%2Fpng%3Bbase64%2CiVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAABGdBTUEAALGPC%2FxhBQAAAAFzUkdCAK7OHOkAAAAbUExURQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP%2F%2F%2F5TvxDIAAAAIdFJOUwAjRA8xXANAL%2Bv0SAAAADNJREFUGNNjYCAIOJjRBdBFWMkVQeGzcHAwksJnAPPZGOGAASzPzAEHEGVsLExQwE7YswCb7AFZSF3bbAAAAABJRU5ErkJggg%3D%3D)](https://wemake.services)
 [![kira-family](https://img.shields.io/badge/kira-family-pink.svg)](https://github.com/wemake-services/kira)
+[![Build Status](https://travis-ci.org/wemake-services/kira.svg?branch=master)](https://travis-ci.org/wemake-services/kira)
+[![Coverage Status](https://coveralls.io/repos/github/wemake-services/kira/badge.svg?branch=master)](https://coveralls.io/github/wemake-services/kira?branch=master)
 
 Issue management framework with [deep philosophy](https://wemake.services/meta/) underneath.
 Part of the [`@kira`](https://github.com/wemake-services/kira) bots family.
@@ -23,8 +25,8 @@ These bots are developed and maintained by [wemake.services](https://wemake-serv
 - [kira-dependencies](https://github.com/wemake-services/kira-dependencies) - micro-bot to continuously update your dependency versions, based on dependabot
 - kira-wakatime - WIP: micro-bot to track time you spend writing code
 - kira-branches - WIP: micro-bot to delete stale branches
-- kira-reviewers - WIP: micro-bot to assign reviewers based on codeownership 
-- kira-stats - WIP: micro-bot to visualize your project's stats 
+- kira-reviewers - WIP: micro-bot to assign reviewers based on codeownership
+- kira-stats - WIP: micro-bot to visualize your project's stats
 
 ### Kira's friends
 

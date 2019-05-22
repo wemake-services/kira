@@ -1,0 +1,29 @@
+language: elixir
+
+sudo: false
+
+elixir:
+  - 1.8.1
+
+env:
+  - MIX_ENV="test"
+
+before_install:
+  - mix local.hex --force && mix local.rebar --force
+
+install:
+  - mix do deps.get, deps.compile
+
+before_script:
+  # Setting up database:
+  - mix ecto.reset
+
+script:
+  - mix format --check-formatted
+  - mix credo
+  # TODO: enable HTTPS
+  - mix sobelow --private -i Config.HTTPS
+  - mix test --cover --timeout 1000
+
+notifications:
+  email: false
