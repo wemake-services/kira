@@ -5,6 +5,9 @@ sudo: false
 elixir:
   - 1.8.1
 
+addons:
+  postgresql: "9.6"
+
 env:
   - MIX_ENV="test";
     KIRA_GITLAB_SECRET_HEADER_VALUE="123";
@@ -25,7 +28,7 @@ script:
   - mix credo
   # TODO: enable HTTPS
   - mix sobelow --private -i Config.HTTPS
-  - mix test --cover --timeout 1000
+  - mix coveralls.travis --timeout 1000
 
 notifications:
   email: false
