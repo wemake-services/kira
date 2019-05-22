@@ -1,3 +1,8 @@
+---
+name: Bug
+about: Something is not working
+---
+
 ## How is it now?
 
 
@@ -7,7 +12,7 @@
 ## Links
 
 1. Link to Sentry
-2. Link to other related Gitlab issues
+2. Link to other related issues
 
 
 ## Environment

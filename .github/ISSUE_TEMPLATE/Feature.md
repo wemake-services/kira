@@ -1,3 +1,8 @@
+---
+name: Feature
+about: We need a new feature
+---
+
 ## What needs to be done?
 
 
@@ -8,4 +13,4 @@ Are there any technical details worth mentioning?
 
 ## Links
 
-1. Link to other related Gitlab issues
+1. Link to other related issues
