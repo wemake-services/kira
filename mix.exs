@@ -56,7 +56,7 @@ defmodule Kira.MixProject do
       # Custom dependencies:
       {:exop, "~> 1.2.3"},
       {:tesla, "~> 1.2.0"},
-      {:hackney, "~> 1.14.0"},
+      {:hackney, "~> 1.15.1"},
       {:quantum, "~> 2.3"},
       {:timex, "~> 3.0"},
 
