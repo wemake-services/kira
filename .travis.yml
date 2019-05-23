@@ -3,7 +3,7 @@ language: elixir
 sudo: false
 
 elixir:
-  - 1.8.1
+  - 1.8.2
 
 addons:
   postgresql: "9.6"
