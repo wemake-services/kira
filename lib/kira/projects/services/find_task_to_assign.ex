@@ -5,9 +5,20 @@ defmodule Kira.Projects.Services.FindTaskToAssign do
 
   use Exop.Operation
 
-  # TODO: docs
+  alias Kira.Projects.Queries.IssueQueries
+  alias Kira.Projects.Queries.ProjectQueries
 
-  def process(_params) do
-    # TODO
+  parameter(:project_uid, type: :integer)
+
+  def process(%{project_uid: project_uid}) do
+    project = ProjectQueries.get_project!(project_uid)
+
+    issue =
+      Issue
+      |> IssueQueries.for_project(project)
+      |> IssueQueries.open
+      |> IssueQueries.with_highest_priority
+
+    %{entity: issue}
   end
 end
