@@ -32,6 +32,10 @@ defmodule Kira.Projects.Queries.IssueQueries do
       where: p.id == ^project.id
   end
 
+  def with_no_assignee(query) do
+    query |> where([i], is_nil(i.assignee_id))
+  end
+
   def with_highest_priority(query) do
     # TODO: implement prioritizing
     query |> first
