@@ -28,6 +28,8 @@ defmodule KiraTest.Factory do
 
   def issue_factory(attrs) do
     state = Map.get(attrs, :state, "opened")
+    project = Map.get(attrs, :project, insert(:project))
+    author = Map.get(attrs, :author, insert(:user))
     assignee = Map.get(attrs, :assignee, nil)
 
     %Issue{
@@ -35,8 +37,8 @@ defmodule KiraTest.Factory do
       iid: sequence(:iid, &(&1 + 1)),
       state: state,
       due_date: Faker.Date.forward(100) |> Date.to_iso8601(),
-      project: insert(:project),
-      author: insert(:user),
+      project: project,
+      author: author,
       assignee: assignee
     }
   end

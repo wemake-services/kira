@@ -19,8 +19,8 @@ defmodule Kira.Projects.Queries.IssueQueries do
   @doc """
   Selects open issues.
   """
-  def open(query) do
-    query |> where([i], i.state == 'open')
+  def opened(query) do
+    query |> where([i], i.state == "opened")
   end
 
   @doc """
@@ -32,12 +32,20 @@ defmodule Kira.Projects.Queries.IssueQueries do
       where: p.id == ^project.id
   end
 
+  @doc """
+  Selects issues with no assignee.
+  """
   def with_no_assignee(query) do
     query |> where([i], is_nil(i.assignee_id))
   end
 
+  @doc """
+  Selects an issue with the highest priority.
+  """
   def with_highest_priority(query) do
     # TODO: implement prioritizing
-    query |> first
+    query
+    |> first
+    |> Repo.one()
   end
 end

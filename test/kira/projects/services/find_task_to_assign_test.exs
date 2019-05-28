@@ -4,27 +4,48 @@ defmodule KiraTest.Projects.Services.FindTaskToAssignTest do
   import KiraTest.Factory
   alias Kira.Projects.Services.FindTaskToAssign
 
-  # TODO:
-  # Find an issue with:
-  #   1. status: opened
-  #   2. assignee: nil
   describe "find task to assign service" do
-    test "with no task to be assigned" do
-      # TODO
+    setup do
+      {:ok, project: insert(:project)}
     end
 
-    test "with only one task to be assigned" do
-      # TODO
+    test "with no task to be assigned", %{project: project} do
+      {:ok, context} = FindTaskToAssign.run(project_uid: project.uid)
+
+      assert context.entity == nil
     end
 
-    test "with multiple tasks to be assigned" do
-      # test "without prioritization" do
-      # TODO
-      # end
+    test "with only one task to be assigned", %{project: project} do
+      issue = insert(:issue, %{project: project})
 
-      # test "with prioritization" do
-      # TODO
-      # end
+      {:ok, context} = FindTaskToAssign.run(project_uid: project.uid)
+
+      assert context.entity.id == issue.id
+    end
+
+    test "with multiple tasks to be assigned", %{project: project} do
+      Enum.each(0..3, fn x ->
+        insert(:issue, %{project: project})
+      end)
+
+      {:ok, context} = FindTaskToAssign.run(project_uid: project.uid)
+
+      project_issues =
+        project
+        |> Ecto.assoc(:issues)
+        |> Repo.all()
+
+      assert Enum.member?(project_issues, context.entity)
+    end
+
+    test "with existing tasks with assignees", %{project: project} do
+      Enum.each(0..3, fn x ->
+        insert(:issue, %{project: project, assignee: build(:user)})
+      end)
+
+      {:ok, context} = FindTaskToAssign.run(project_uid: project.uid)
+
+      assert context.entity == nil
     end
   end
 end

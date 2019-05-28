@@ -5,6 +5,7 @@ defmodule Kira.Projects.Services.FindTaskToAssign do
 
   use Exop.Operation
 
+  alias Kira.Projects.Entities.Issue
   alias Kira.Projects.Queries.IssueQueries
   alias Kira.Projects.Queries.ProjectQueries
 
@@ -16,10 +17,10 @@ defmodule Kira.Projects.Services.FindTaskToAssign do
     issue =
       Issue
       |> IssueQueries.for_project(project)
-      |> IssueQueries.open()
+      |> IssueQueries.opened()
       |> IssueQueries.with_no_assignee()
       |> IssueQueries.with_highest_priority()
 
-    %{entity: issue}
+    {:ok, %{entity: issue}}
   end
 end
