@@ -28,13 +28,13 @@ defmodule Kira.Common.TimeUtils do
 
   Example:
     iex(3)> Kira.Common.TimeUtils.from_gitlab_timeformat!(
-    ...(3)>   "2019-03-09 09:12:12 UTC"
+    ...(3)>   "2019-03-09 16:50:55 UTC"
     ...(3)> )
-    ~N[2019-03-09 09:12:12]
+    ~N[2019-03-09 16:50:55]
 
   """
   def from_gitlab_timeformat!(timestamp) do
-    Timex.parse!(timestamp, "{YYYY}-{0M}-{0D} {h12}:{m}:{s} UTC")
+    Timex.parse!(timestamp, "{YYYY}-{0M}-{0D} {h24}:{m}:{s} UTC")
   end
 
   @doc """
@@ -42,12 +42,12 @@ defmodule Kira.Common.TimeUtils do
 
   Example:
     iex(3)> Kira.Common.TimeUtils.to_gitlab_timeformat!(
-    ...(3)>   ~N[2019-03-09 09:12:12]
+    ...(3)>   ~N[2019-03-09 16:50:55]
     ...(3)> )
-    "2019-03-09 09:12:12 UTC"
+    "2019-03-09 16:50:55 UTC"
 
   """
   def to_gitlab_timeformat!(datetime) do
-    Timex.format!(datetime, "{YYYY}-{0M}-{0D} {0h12}:{m}:{s} UTC")
+    Timex.format!(datetime, "{YYYY}-{0M}-{0D} {0h24}:{m}:{s} UTC")
   end
 end
