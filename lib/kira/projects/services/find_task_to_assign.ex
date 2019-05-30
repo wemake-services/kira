@@ -17,7 +17,7 @@ defmodule Kira.Projects.Services.FindTaskToAssign do
     issue =
       Issue
       |> IssueQueries.for_project(project)
-      |> IssueQueries.opened()
+      |> IssueQueries.queued()
       |> IssueQueries.with_no_assignee()
       |> IssueQueries.with_highest_priority()
 

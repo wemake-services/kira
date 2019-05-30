@@ -16,7 +16,7 @@ defmodule KiraTest.Projects.Services.FindTaskToAssignTest do
     end
 
     test "with only one task to be assigned", %{project: project} do
-      issue = insert(:issue, %{project: project})
+      issue = insert(:issue, %{project: project, state: "queued"})
 
       {:ok, context} = FindTaskToAssign.run(project_uid: project.uid)
 
@@ -24,9 +24,7 @@ defmodule KiraTest.Projects.Services.FindTaskToAssignTest do
     end
 
     test "with multiple tasks to be assigned", %{project: project} do
-      Enum.each(0..3, fn x ->
-        insert(:issue, %{project: project})
-      end)
+      insert_list(3, :issue, %{project: project, state: "queued"})
 
       {:ok, context} = FindTaskToAssign.run(project_uid: project.uid)
 
@@ -38,10 +36,42 @@ defmodule KiraTest.Projects.Services.FindTaskToAssignTest do
       assert Enum.member?(project_issues, context.entity)
     end
 
+    test "with differently weighed multiple tasks", %{project: project} do
+      low_priority_issue = insert(:issue, %{project: project, state: "queued"})
+
+      middle_priority_issue =
+        insert(:issue, %{project: project, state: "queued", weight: 1})
+
+      high_priority_issue =
+        insert(:issue, %{project: project, state: "queued", weight: 9000})
+
+      {:ok, context} = FindTaskToAssign.run(project_uid: project.uid)
+
+      assert context.entity.id == high_priority_issue.id
+    end
+
     test "with existing tasks with assignees", %{project: project} do
-      Enum.each(0..3, fn x ->
-        insert(:issue, %{project: project, assignee: build(:user)})
-      end)
+      insert_list(3, :issue, %{
+        project: project,
+        state: "queued",
+        assignee: insert(:user)
+      })
+
+      {:ok, context} = FindTaskToAssign.run(project_uid: project.uid)
+
+      assert context.entity == nil
+    end
+
+    test "with existing opened tasks", %{project: project} do
+      insert_list(3, :issue, %{project: project})
+
+      {:ok, context} = FindTaskToAssign.run(project_uid: project.uid)
+
+      assert context.entity == nil
+    end
+
+    test "with existing closed tasks", %{project: project} do
+      insert_list(3, :issue, %{project: project, state: "closed"})
 
       {:ok, context} = FindTaskToAssign.run(project_uid: project.uid)
 

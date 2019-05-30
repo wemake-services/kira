@@ -31,6 +31,7 @@ defmodule KiraTest.Factory do
     project = Map.get(attrs, :project, insert(:project))
     author = Map.get(attrs, :author, insert(:user))
     assignee = Map.get(attrs, :assignee, nil)
+    weight = Map.get(attrs, :weight, 0)
 
     %Issue{
       uid: sequence(:uid, &(&1 + 100)),
@@ -39,7 +40,8 @@ defmodule KiraTest.Factory do
       due_date: Faker.Date.forward(100) |> Date.to_iso8601(),
       project: project,
       author: author,
-      assignee: assignee
+      assignee: assignee,
+      weight: weight
     }
   end
 
