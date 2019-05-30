@@ -31,6 +31,8 @@ defmodule Kira.Projects.Entities.Project do
       join_through: UserProject,
       on_replace: :delete
 
+    has_many :issues, Kira.Projects.Entities.Issue
+
     timestamps()
   end
 
