@@ -20,8 +20,9 @@ defmodule KiraWeb.Webhooks.MergeRequestWebhook do
   end
 
   # TODO: remove from queue on closed
-  # TODO: handle updates as well
+  # TODO: add support of other possible actions, which are close, merge, reopen
   defp select_command("open"), do: Usecases.SaveMergeRequestFromWebhook
+  defp select_command("update"), do: Usecases.UpdateMergeRequestFromWebhook
 
   defp structure_payload(webhook_data) do
     %{

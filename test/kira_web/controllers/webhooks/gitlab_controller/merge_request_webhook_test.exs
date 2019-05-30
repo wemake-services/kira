@@ -16,7 +16,7 @@ defmodule KiraWebTest.Webhooks.GitlabController.MergeRequestWebhookTest do
     {:ok, project: insert(:project), author: insert(:user), conn: conn}
   end
 
-  describe "merge request webhook" do
+  describe "create merge request webhook" do
     test "valid merge request data is handled", %{
       project: project,
       author: author,
@@ -50,4 +50,60 @@ defmodule KiraWebTest.Webhooks.GitlabController.MergeRequestWebhookTest do
       assert MergeRequestQueries.get_merge_request!(merge_request["uid"])
     end
   end
+
+  describe "update merge request webhook" do
+    setup %{project: project, author: author} do
+      {:ok, merge_request: insert(:merge_request, project: project, author: author)}
+    end
+
+    test "valid merge request data is handled", %{
+      merge_request: merge_request,
+      conn: conn
+    } do
+
+      merge_request_payload =
+        merge_request
+        |> Map.from_struct()
+        |> Map.delete(:__meta__)
+        |> to_string_map()
+        |> Map.merge(
+             %{
+               "id" => merge_request.uid,
+               "author_id" => merge_request.author.uid,
+               "assignee_id" => nil,
+               "merge_status" => "can_be_merged",
+               "action" => "update",
+               "work_in_progress" => false,
+               "created_at" =>
+                 TimeUtils.to_gitlab_timeformat!(merge_request.origin_timestamp)
+             }
+           )
+
+      conn =
+        post(
+          conn,
+          Routes.gitlab_path(conn, :create),
+          %{
+            "object_kind" => "merge_request",
+            "project" => %{"id" => merge_request.project.uid},
+            "object_attributes" => merge_request_payload
+          }
+        )
+
+      assert response(conn, 200)
+
+      instance = MergeRequestQueries.get_merge_request!(merge_request.uid)
+
+      assert instance.state == "opened"
+      assert instance.assignee_id == nil
+      assert instance.merge_status == "can_be_merged"
+      assert instance.work_in_progress == false
+    end
+  end
+
+  # TODO: borrowed from issue webhook test. need refactor, make helper
+  defp to_string_map(dict) do
+    Map.new(dict, fn {k, v} -> {Atom.to_string(k), v} end)
+  end
+
 end
