@@ -53,31 +53,29 @@ defmodule KiraWebTest.Webhooks.GitlabController.MergeRequestWebhookTest do
 
   describe "update merge request webhook" do
     setup %{project: project, author: author} do
-      {:ok, merge_request: insert(:merge_request, project: project, author: author)}
+      {:ok,
+       merge_request: insert(:merge_request, project: project, author: author)}
     end
 
     test "valid merge request data is handled", %{
       merge_request: merge_request,
       conn: conn
     } do
-
       merge_request_payload =
         merge_request
         |> Map.from_struct()
         |> Map.delete(:__meta__)
         |> to_string_map()
-        |> Map.merge(
-             %{
-               "id" => merge_request.uid,
-               "author_id" => merge_request.author.uid,
-               "assignee_id" => nil,
-               "merge_status" => "can_be_merged",
-               "action" => "update",
-               "work_in_progress" => false,
-               "created_at" =>
-                 TimeUtils.to_gitlab_timeformat!(merge_request.origin_timestamp)
-             }
-           )
+        |> Map.merge(%{
+          "id" => merge_request.uid,
+          "author_id" => merge_request.author.uid,
+          "assignee_id" => nil,
+          "merge_status" => "can_be_merged",
+          "action" => "update",
+          "work_in_progress" => false,
+          "created_at" =>
+            TimeUtils.to_gitlab_timeformat!(merge_request.origin_timestamp)
+        })
 
       conn =
         post(
@@ -105,5 +103,4 @@ defmodule KiraWebTest.Webhooks.GitlabController.MergeRequestWebhookTest do
   defp to_string_map(dict) do
     Map.new(dict, fn {k, v} -> {Atom.to_string(k), v} end)
   end
-
 end
