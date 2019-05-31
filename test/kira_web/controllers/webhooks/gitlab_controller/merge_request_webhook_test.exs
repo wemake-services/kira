@@ -3,7 +3,7 @@ defmodule KiraWebTest.Webhooks.GitlabController.MergeRequestWebhookTest do
 
   import Tesla.Mock
   import KiraTest.Factory
-  alias Kira.Common.{TimeUtils, MapUtils}
+  alias Kira.Common.{MapUtils, TimeUtils}
   alias Kira.Projects.Queries.MergeRequestQueries
 
   setup %{conn: conn} do

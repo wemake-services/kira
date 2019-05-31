@@ -6,9 +6,9 @@ defmodule Kira.Projects.Commands.UpdateIssue do
   use Exop.Operation
 
   alias Kira.Accounts.Queries.UserQueries
+  alias Kira.Common.MapUtils
   alias Kira.Projects.Entities.Issue
   alias Kira.Projects.Queries.IssueQueries
-  alias Kira.Common.MapUtils
   alias Kira.Repo
 
   parameter(:assignee_uid, type: :integer, allow_nil: true)

@@ -3,8 +3,8 @@ defmodule KiraWebTest.Webhooks.GitlabController.IssueWebhookTest do
 
   import Tesla.Mock
   import KiraTest.Factory
-  alias Kira.Projects.Queries.IssueQueries
   alias Kira.Common.MapUtils
+  alias Kira.Projects.Queries.IssueQueries
 
   setup %{conn: conn} do
     # Just disable all HTTP calls:

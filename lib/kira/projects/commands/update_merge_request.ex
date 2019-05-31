@@ -6,9 +6,9 @@ defmodule Kira.Projects.Commands.UpdateMergeRequest do
   use Exop.Operation
 
   alias Kira.Accounts.Queries.UserQueries
+  alias Kira.Common.MapUtils
   alias Kira.Projects.Entities.MergeRequest
   alias Kira.Projects.Queries.MergeRequestQueries
-  alias Kira.Common.MapUtils
   alias Kira.Repo
 
   parameter(:assignee_uid, type: :integer, allow_nil: true)
