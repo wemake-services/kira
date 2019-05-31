@@ -1,14 +1,14 @@
-defmodule Kira.Projects.Commands.UpdateIssue do
+defmodule Kira.Projects.Commands.UpdateMergeRequest do
   @moduledoc """
-  Persistant command to update an existing `Issue`.
+  Persistant command to update an existing `MergeRequest`.
   """
 
   use Exop.Operation
 
   alias Kira.Accounts.Queries.UserQueries
   alias Kira.Common.MapUtils
-  alias Kira.Projects.Entities.Issue
-  alias Kira.Projects.Queries.IssueQueries
+  alias Kira.Projects.Entities.MergeRequest
+  alias Kira.Projects.Queries.MergeRequestQueries
   alias Kira.Repo
 
   parameter(:assignee_uid, type: :integer, allow_nil: true)
@@ -18,18 +18,16 @@ defmodule Kira.Projects.Commands.UpdateIssue do
     valid_attrs =
       attrs
       |> Map.put("assignee_id", UserQueries.get_user_id_or_nil(assignee_uid))
-      # State should not to be updated from "queued"
-      |> Map.delete("state")
       |> MapUtils.atomize_keys()
 
-    {:ok, issue} =
+    {:ok, merge_request} =
       Repo.transaction(fn ->
         attrs["uid"]
-        |> IssueQueries.get_issue!()
-        |> Issue.changeset(valid_attrs)
+        |> MergeRequestQueries.get_merge_request!()
+        |> MergeRequest.changeset(valid_attrs)
         |> Repo.update!()
       end)
 
-    %{entity: issue}
+    %{entity: merge_request}
   end
 end

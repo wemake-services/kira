@@ -3,6 +3,7 @@ defmodule KiraWebTest.Webhooks.GitlabController.IssueWebhookTest do
 
   import Tesla.Mock
   import KiraTest.Factory
+  alias Kira.Common.MapUtils
   alias Kira.Projects.Queries.IssueQueries
 
   setup %{conn: conn} do
@@ -59,7 +60,7 @@ defmodule KiraWebTest.Webhooks.GitlabController.IssueWebhookTest do
         issue
         |> Map.from_struct()
         |> Map.delete(:__meta__)
-        |> to_string_map()
+        |> MapUtils.stringify_keys()
         |> Map.put("id", issue.uid)
         |> Map.put("author_id", issue.author.uid)
         |> Map.put("assignee_id", nil)
@@ -103,7 +104,7 @@ defmodule KiraWebTest.Webhooks.GitlabController.IssueWebhookTest do
         issue
         |> Map.from_struct()
         |> Map.delete(:__meta__)
-        |> to_string_map()
+        |> MapUtils.stringify_keys()
         |> Map.put("id", issue.uid)
         |> Map.put("author_id", issue.author.uid)
         |> Map.put("assignee_id", nil)
@@ -124,10 +125,5 @@ defmodule KiraWebTest.Webhooks.GitlabController.IssueWebhookTest do
       assert response(conn, 200)
       assert IssueQueries.get_issue!(issue.uid).state == "closed"
     end
-  end
-
-  # TODO: refactor, make helper
-  defp to_string_map(dict) do
-    Map.new(dict, fn {k, v} -> {Atom.to_string(k), v} end)
   end
 end
