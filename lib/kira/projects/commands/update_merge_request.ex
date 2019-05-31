@@ -8,6 +8,7 @@ defmodule Kira.Projects.Commands.UpdateMergeRequest do
   alias Kira.Accounts.Queries.UserQueries
   alias Kira.Projects.Entities.MergeRequest
   alias Kira.Projects.Queries.MergeRequestQueries
+  alias Kira.Common.MapUtils
   alias Kira.Repo
 
   parameter(:assignee_uid, type: :integer, allow_nil: true)
@@ -17,7 +18,7 @@ defmodule Kira.Projects.Commands.UpdateMergeRequest do
     valid_attrs =
       attrs
       |> Map.put("assignee_id", UserQueries.get_user_id_or_nil(assignee_uid))
-      |> atomize_keys()
+      |> MapUtils.atomize_keys()
 
     {:ok, merge_request} =
       Repo.transaction(fn ->
@@ -28,10 +29,5 @@ defmodule Kira.Projects.Commands.UpdateMergeRequest do
       end)
 
     %{entity: merge_request}
-  end
-
-  # TODO: the same we do in tests, we need generic way to do that
-  defp atomize_keys(dict) do
-    Map.new(dict, fn {k, v} -> {String.to_existing_atom(k), v} end)
   end
 end

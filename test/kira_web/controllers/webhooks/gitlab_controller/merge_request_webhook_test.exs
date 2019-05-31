@@ -3,7 +3,7 @@ defmodule KiraWebTest.Webhooks.GitlabController.MergeRequestWebhookTest do
 
   import Tesla.Mock
   import KiraTest.Factory
-  alias Kira.Common.TimeUtils
+  alias Kira.Common.{TimeUtils, MapUtils}
   alias Kira.Projects.Queries.MergeRequestQueries
 
   setup %{conn: conn} do
@@ -61,11 +61,14 @@ defmodule KiraWebTest.Webhooks.GitlabController.MergeRequestWebhookTest do
       merge_request: merge_request,
       conn: conn
     } do
+      created_at =
+        TimeUtils.to_gitlab_timeformat!(merge_request.origin_timestamp)
+
       merge_request_payload =
         merge_request
         |> Map.from_struct()
         |> Map.delete(:__meta__)
-        |> to_string_map()
+        |> MapUtils.stringify_keys()
         |> Map.merge(%{
           "id" => merge_request.uid,
           "author_id" => merge_request.author.uid,
@@ -73,8 +76,7 @@ defmodule KiraWebTest.Webhooks.GitlabController.MergeRequestWebhookTest do
           "merge_status" => "can_be_merged",
           "action" => "update",
           "work_in_progress" => false,
-          "created_at" =>
-            TimeUtils.to_gitlab_timeformat!(merge_request.origin_timestamp)
+          "created_at" => created_at
         })
 
       conn =
@@ -90,17 +92,13 @@ defmodule KiraWebTest.Webhooks.GitlabController.MergeRequestWebhookTest do
 
       assert response(conn, 200)
 
-      instance = MergeRequestQueries.get_merge_request!(merge_request.uid)
+      instance =
+        MergeRequestQueries.get_merge_request!(merge_request.uid)
 
       assert instance.state == "opened"
       assert instance.assignee_id == nil
       assert instance.merge_status == "can_be_merged"
       assert instance.work_in_progress == false
     end
-  end
-
-  # TODO: borrowed from issue webhook test. need refactor, make helper
-  defp to_string_map(dict) do
-    Map.new(dict, fn {k, v} -> {Atom.to_string(k), v} end)
   end
 end
