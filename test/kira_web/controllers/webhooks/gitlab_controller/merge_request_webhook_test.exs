@@ -92,8 +92,7 @@ defmodule KiraWebTest.Webhooks.GitlabController.MergeRequestWebhookTest do
 
       assert response(conn, 200)
 
-      instance =
-        MergeRequestQueries.get_merge_request!(merge_request.uid)
+      instance = MergeRequestQueries.get_merge_request!(merge_request.uid)
 
       assert instance.state == "opened"
       assert instance.assignee_id == nil
