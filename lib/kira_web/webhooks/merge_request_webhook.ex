@@ -23,6 +23,7 @@ defmodule KiraWeb.Webhooks.MergeRequestWebhook do
   # TODO: add support of other possible actions, which are close, merge, reopen
   defp select_command("open"), do: Usecases.SaveMergeRequestFromWebhook
   defp select_command("update"), do: Usecases.UpdateMergeRequestFromWebhook
+  defp select_command("close"), do: Usecases.CloseMergeRequestFromWebhook
 
   defp structure_payload(webhook_data) do
     %{
