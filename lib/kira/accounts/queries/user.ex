@@ -18,4 +18,16 @@ defmodule Kira.Accounts.Queries.UserQueries do
   def get_user_id_or_nil(uid) do
     get_user!(uid).id
   end
+
+  def find_or_create_by_email(user_params) do
+    case Repo.get_by(User, email: user_params.email) do
+      nil  ->
+        %User{email: user_params.email, username: user_params.username, provider: user_params.provider,
+              state: user_params.state, uid: user_params.uid}
+      user ->
+        user
+    end
+    |> User.changeset(user_params)
+    |> Repo.insert_or_update
+  end
 end

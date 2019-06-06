@@ -13,6 +13,7 @@ defmodule Kira.Accounts.Entities.User do
 
   @fields ~w(
     uid
+    email
     username
     state
     expires_at
@@ -23,6 +24,8 @@ defmodule Kira.Accounts.Entities.User do
   schema "users" do
     field :uid, :integer
     field :username, :string
+    field :email, :string
+    field :provider, :string
 
     field :state, :string
     field :expires_at, :utc_datetime
