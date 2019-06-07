@@ -54,7 +54,7 @@ config :kira, :gitlab,
 # Configuring for OAuth
 config :ueberauth, Ueberauth,
   providers: [
-    github: {Ueberauth.Strategy.Github, [send_redirect_uri: false, default_scope: "user"]}
+    github: {Ueberauth.Strategy.Github, [default_scope: "user"]}
   ]
 
 config :ueberauth, Ueberauth.Strategy.Github.OAuth,

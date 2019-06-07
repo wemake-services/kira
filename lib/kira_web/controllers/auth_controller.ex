@@ -6,7 +6,7 @@ defmodule KiraWeb.AuthController do
 
   def callback(%{assigns: %{ueberauth_auth: auth}} = conn, _params) do
     user_params = %{email: auth.info.email, username: auth.info.nickname, provider: Atom.to_string(auth.provider),
-                    state: "active", uid: auth.extra.raw_info.user["id"]}
+                    state: "active", uid: auth.uid}
 
     case UserQueries.find_or_create_by_email(user_params) do
       {:ok, user} ->
@@ -18,8 +18,6 @@ defmodule KiraWeb.AuthController do
 
   defp respond_with_json(conn, data) do
     conn
-    |> put_resp_header("content-type", "application/json; charset=utf-8")
-    |> send_resp(200, Jason.encode!(data))
-    |> halt
+    |> json(data)
   end
 end
