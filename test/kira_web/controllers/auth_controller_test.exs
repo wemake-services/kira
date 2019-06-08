@@ -6,25 +6,29 @@ defmodule KiraWeb.AuthControllerTest do
 
   @ueberauth_auth %{
     credentials: %{token: "johnsnowdoknownothing"},
-    info: %{
-      email: "john.snow@knewnothing.com",
-      nickname: "john.snow",
-      name: "John Show"
-    },
-    provider: :github,
-    uid: 259_250
+    extra: %{
+      raw_info: %{
+        user: %{
+          "email" => "john.snow@knewnothing.com",
+          "username" => "john.snow",
+          "name" => "John Show",
+          "id" => 21,
+          "state" => "active"
+        }
+      }
+    }
   }
 
-  test "redirects user to github for authentication", %{conn: conn} do
-    conn = get(conn, "/auth/github?scope=user")
+  test "redirects user to gitlab for authentication", %{conn: conn} do
+    conn = get(conn, "/auth/gitlab?scope=user")
     assert redirected_to(conn, 302)
   end
 
-  test "creates user from github info", %{conn: conn} do
+  test "creates user from gitlab info", %{conn: conn} do
     conn =
       conn
       |> assign(:ueberauth_auth, @ueberauth_auth)
-      |> get("/auth/github/callback")
+      |> get("/auth/gitlab/callback")
 
     users =
       User
@@ -35,27 +39,26 @@ defmodule KiraWeb.AuthControllerTest do
     assert json_response(conn, 200) == %{
              "user" => %{
                "access_level" => nil,
-               "email" => "john.snow@knewnothing.com",
                "expires_at" => nil,
+               "email" => "john.snow@knewnothing.com",
                "state" => "active",
-               "uid" => 259_250,
+               "uid" => 21,
                "username" => "john.snow"
              }
            }
   end
 
-  test "find and return user from github email", %{conn: conn} do
-    user =
-      insert(:user, %{
-        email: "john.snow@knewnothing.com",
-        expires_at: nil,
-        access_level: nil
-      })
+  test "find and return user from gitlab email", %{conn: conn} do
+    insert(:user, %{
+      email: "john.snow@knewnothing.com",
+      expires_at: nil,
+      access_level: nil
+    })
 
     conn =
       conn
       |> assign(:ueberauth_auth, @ueberauth_auth)
-      |> get("/auth/github/callback")
+      |> get("/auth/gitlab/callback")
 
     users =
       User
@@ -66,10 +69,10 @@ defmodule KiraWeb.AuthControllerTest do
     assert json_response(conn, 200) == %{
              "user" => %{
                "access_level" => nil,
-               "email" => "john.snow@knewnothing.com",
                "expires_at" => nil,
+               "email" => "john.snow@knewnothing.com",
                "state" => "active",
-               "uid" => 259_250,
+               "uid" => 21,
                "username" => "john.snow"
              }
            }

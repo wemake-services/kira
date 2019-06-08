@@ -4,13 +4,18 @@ defmodule KiraWeb.AuthController do
 
   alias Kira.Accounts.Queries.UserQueries
 
-  def callback(%{assigns: %{ueberauth_auth: auth}} = conn, _params) do
+  def callback(
+        %{
+          assigns: %{ueberauth_auth: %{extra: %{raw_info: %{user: user_info}}}}
+        } = conn,
+        _params
+      ) do
     user_params = %{
-      email: auth.info.email,
-      username: auth.info.nickname,
-      provider: Atom.to_string(auth.provider),
-      state: "active",
-      uid: auth.uid
+      email: user_info["email"],
+      username: user_info["username"],
+      state: user_info["state"],
+      uid: user_info["id"],
+      provider: "gitlab"
     }
 
     case UserQueries.find_or_create_by_email(user_params) do
