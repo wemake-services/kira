@@ -2,7 +2,8 @@ defmodule KiraWeb.AuthControllerTest do
   use KiraWeb.ConnCase
 
   import KiraTest.Factory
-  alias Kira.{Repo, Accounts.Entities.User}
+
+  alias Kira.{Accounts.Entities.User, Repo}
 
   @ueberauth_auth %{
     credentials: %{token: "johnsnowdoknownothing"},
