@@ -26,4 +26,11 @@ defmodule KiraWeb.Router do
 
     resources "/webhook/gitlab", Webhooks.GitlabController, only: [:create]
   end
+
+  scope "/auth", KiraWeb do
+    pipe_through :browser
+
+    get "/:provider", AuthController, :request
+    get "/:provider/callback", AuthController, :callback
+  end
 end

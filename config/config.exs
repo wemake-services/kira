@@ -51,6 +51,24 @@ config :kira, :gitlab,
   secret_header_value: System.get_env("KIRA_GITLAB_SECRET_HEADER_VALUE"),
   domain: "https://gitlab.com"
 
+# Configuring for OAuth
+config :ueberauth, Ueberauth,
+  providers: [
+    identity:
+      {Ueberauth.Strategy.Identity,
+       [
+         callback_methods: ["POST"],
+         uid_field: :email,
+         nickname_field: :username
+       ]},
+    gitlab: {Ueberauth.Strategy.Gitlab, [default_scope: "read_user"]}
+  ]
+
+config :ueberauth, Ueberauth.Strategy.Gitlab.OAuth,
+  client_id: System.get_env("KIRA_GITLAB_CLIENT_ID"),
+  client_secret: System.get_env("KIRA_GITLAB_CLIENT_SECRET"),
+  redirect_uri: System.get_env("KIRA_GITLAB_REDIRECT_URI")
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"

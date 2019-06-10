@@ -28,7 +28,7 @@ defmodule Kira.MixProject do
   def application do
     [
       mod: {Kira.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :ueberauth_gitlab_strategy]
     ]
   end
 
@@ -59,6 +59,10 @@ defmodule Kira.MixProject do
       {:hackney, "~> 1.15.1"},
       {:quantum, "~> 2.3"},
       {:timex, "~> 3.0"},
+      {:ueberauth_gitlab_strategy, "~> 0.2"},
+      # need for oauth2 serialization https://github.com/ueberauth/ueberauth_github/issues/43 (gitlab haves the same),
+      # remove after update lib
+      {:poison, "~> 3.1"},
 
       # Dev only:
       {:phoenix_live_reload, "~> 1.2", only: :dev},
