@@ -62,7 +62,7 @@ defmodule Kira.MixProject do
       {:ueberauth_gitlab_strategy, "~> 0.2"},
       # need for oauth2 serialization https://github.com/ueberauth/ueberauth_github/issues/43 (gitlab haves the same),
       # remove after update lib
-      {:poison, "~> 3.1"},
+      {:poison, "~> 4.0"},
 
       # Dev only:
       {:phoenix_live_reload, "~> 1.2", only: :dev},
