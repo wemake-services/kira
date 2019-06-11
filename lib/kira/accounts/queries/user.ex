@@ -39,4 +39,23 @@ defmodule Kira.Accounts.Queries.UserQueries do
     |> User.changeset(user_params)
     |> Repo.insert_or_update()
   end
+
+  def for_project(query, project) do
+    from u in query,
+      join: p in assoc(u, :projects),
+      where: p.id == ^project.id
+  end
+
+  def assigned_within_project(query, project) do
+    from u in for_project(query, project),
+      join: p in assoc(u, :projects),
+      join: i in assoc(p, :issues),
+      where: i.assignee_id == u.id,
+      distinct: u.id
+  end
+
+  def not_assigned_within_project(query, project) do
+    from u in for_project(query, project),
+      except: ^assigned_within_project(query, project)
+  end
 end
