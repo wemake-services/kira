@@ -11,7 +11,10 @@ defmodule Kira.Projects.Services.NoteCommands.QueueIssue do
   # TODO: move to configuration
   @bot_username "@kira-bot"
 
-  parameter(:note_text, type: :string)
+  parameter(:project_uid, type: :integer, required: false)
+  parameter(:issue_uid, type: :integer, required: false)
+  parameter(:note_text, type: :string, required: true)
+  parameter(:note_iid, type: :integer, required: false)
 
   def process(%{note_text: note_text} = params) do
     # TODO: this is a pretty dump implementation of this command

@@ -8,7 +8,10 @@ defmodule Kira.Projects.Commands.QueueIssue do
   alias Kira.Projects.Queries.IssueQueries
   alias Kira.Repo
 
-  parameter(:issue_uid, type: :integer)
+  parameter(:project_uid, type: :integer, required: false)
+  parameter(:issue_uid, type: :integer, required: true)
+  parameter(:note_text, type: :string, required: false)
+  parameter(:note_iid, type: :integer, required: false)
 
   def process(%{issue_uid: issue_uid} = params) do
     {:ok, issue} =
