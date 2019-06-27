@@ -21,11 +21,8 @@ defmodule KiraTest.Usecases.SaveMergeRequestFromWebhookTest do
     } do
       context = execute_command(project, user)
 
-      assert context.entity.id > 0
-      assert context.entity.project_id == project.id
-      assert context.entity.author_id == user.id
+      assert_context(context, user, project)
       assert context.entity.assignee_id == nil
-      assert context.entity.state == "opened"
     end
 
     test "valid merge_request webhook with assignee", %{
@@ -34,11 +31,8 @@ defmodule KiraTest.Usecases.SaveMergeRequestFromWebhookTest do
     } do
       context = execute_command(project, user, user.uid)
 
-      assert context.entity.id > 0
-      assert context.entity.project_id == project.id
-      assert context.entity.author_id == user.id
+      assert_context(context, user, project)
       assert context.entity.assignee_id == user.id
-      assert context.entity.state == "opened"
     end
 
     defp execute_command(project, user, assignee_uid \\ nil) do
@@ -66,6 +60,13 @@ defmodule KiraTest.Usecases.SaveMergeRequestFromWebhookTest do
         )
 
       context
+    end
+
+    defp assert_context(context, project, user) do
+      assert context.entity.id > 0
+      assert context.entity.project_id == project.id
+      assert context.entity.author_id == user.id
+      assert context.entity.state == "opened"
     end
   end
 end
