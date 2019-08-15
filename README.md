@@ -27,6 +27,7 @@ These bots are developed and maintained by [wemake.services](https://wemake-serv
 - kira-branches - WIP: micro-bot to delete stale branches
 - kira-reviewers - WIP: micro-bot to assign reviewers based on codeownership
 - kira-stats - WIP: micro-bot to visualize your project's stats
+- kira-security - WIP: micro-bot to security audit your apps
 
 ### Kira's friends
 
