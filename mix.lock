@@ -14,7 +14,7 @@
   "ecto_state_machine": {:hex, :ecto_state_machine, "0.1.0", "39f5a2fef325eae20a1d1b8e543cc93825295cb069482fe61fd9a5ed930f4eb5", [], [{:ecto, ">= 1.1.2 or >= 2.0.0", [hex: :ecto, repo: "hexpm", optional: false]}], "hexpm"},
   "ex_machina": {:hex, :ex_machina, "2.3.0", "92a5ad0a8b10ea6314b876a99c8c9e3f25f4dde71a2a835845b136b9adaf199a", [], [{:ecto, "~> 2.2 or ~> 3.0", [hex: :ecto, repo: "hexpm", optional: true]}, {:ecto_sql, "~> 3.0", [hex: :ecto_sql, repo: "hexpm", optional: true]}], "hexpm"},
   "ex_parameterized": {:hex, :ex_parameterized, "1.3.5", "5ec0a206a9d9de8f4e051621167fcfc3d515d0768bafd9ecf017b092ec1cea75", [], [], "hexpm"},
-  "excoveralls": {:hex, :excoveralls, "0.11.1", "dd677fbdd49114fdbdbf445540ec735808250d56b011077798316505064edb2c", [:mix], [{:hackney, "~> 1.0", [hex: :hackney, repo: "hexpm", optional: false]}, {:jason, "~> 1.0", [hex: :jason, repo: "hexpm", optional: false]}], "hexpm"},
+  "excoveralls": {:hex, :excoveralls, "0.11.2", "0c6f2c8db7683b0caa9d490fb8125709c54580b4255ffa7ad35f3264b075a643", [:mix], [{:hackney, "~> 1.0", [hex: :hackney, repo: "hexpm", optional: false]}, {:jason, "~> 1.0", [hex: :jason, repo: "hexpm", optional: false]}], "hexpm"},
   "exop": {:hex, :exop, "1.2.5", "f07c57bd6d7ef51deb767c8b4671a945d5e2e565ea39b3ba6f86129b9c6e1f2a", [:mix], [], "hexpm"},
   "exsync": {:hex, :exsync, "0.2.3", "a1ac11b4bd3808706003dbe587902101fcc1387d9fc55e8b10972f13a563dd15", [], [{:file_system, "~> 0.2", [hex: :file_system, repo: "hexpm", optional: false]}], "hexpm"},
   "faker": {:hex, :faker, "0.12.0", "796cbac868c86c2df6f273ea4cdf2e271860863820e479e04a374b7ee6c376b6", [], [], "hexpm"},
