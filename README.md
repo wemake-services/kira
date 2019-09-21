@@ -15,7 +15,7 @@ We have released first public bots!
 
 ### Kira's family
 
-These bots are developed and maintained by [wemake.services](https://wemake-services):
+These bots are developed and maintained by [wemake.services](https://wemake.services):
 
 - [kira](https://github.com/wemake-services/kira) - issue management framework with deep philosophy underneath
 - [kira-setup](https://github.com/wemake-services/kira-setup) - micro-bot (CLI) to setup new GitLab projects with `RSDP` and Kira in mind
