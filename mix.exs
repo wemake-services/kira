@@ -54,7 +54,7 @@ defmodule Kira.MixProject do
       {:cowboy, "~> 2.5", override: true},
 
       # Custom dependencies:
-      {:exop, "~> 1.2.3"},
+      {:exop, "~> 1.3.4"},
       {:tesla, "~> 1.2.0"},
       {:hackney, "~> 1.15.1"},
       {:quantum, "~> 2.3"},
