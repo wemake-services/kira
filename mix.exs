@@ -74,7 +74,7 @@ defmodule Kira.MixProject do
       {:faker, "~> 0.12", only: :test},
       {:mox, "~> 0.5", only: :test},
       {:sobelow, "~> 0.7", only: [:dev, :test], runtime: false},
-      {:credo, "~> 1.1.0", only: [:dev, :test], runtime: false}
+      {:credo, "~> 1.2.1", only: [:dev, :test], runtime: false}
     ]
   end
 
